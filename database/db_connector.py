@@ -5,10 +5,10 @@ from dotenv import load_dotenv, find_dotenv
 load_dotenv(find_dotenv())
 
 # Set the variables in our application with those environment variables
-host = "temp"
-user = "temp"
-passwd = "temp"
-db = "temp"
+host = os.environ.get("340DBHOST")
+user = os.environ.get("340DBUSER")
+passwd = os.environ.get("340DBPW")
+db = os.environ.get("340DB")
 
 def connect_to_database(host = host, user = user, passwd = passwd, db = db):
     '''
