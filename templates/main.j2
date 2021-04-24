@@ -1,0 +1,49 @@
+<html>
+<head>
+    <title>Rapid Beaver Motors | {% block title %}{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+{# Navigation Menu #}
+<nav>
+  <h1>Rapid Beaver Motors - Index</h1>
+  <h3>Index of Pages</h3>
+  <ul>
+      <li><a href="{{ url_for('root') }}">Home</a>
+
+      <li><a href="{{ url_for('Employees') }}">Employees</a> 
+        <ul>
+          <li><a href="{{ url_for('createEmployee') }}">Add New Employee</a>
+          <li><a href="{{ url_for('updateEmployee') }}">Update Employee</a>  
+      </ul>
+
+      <li><a href="{{ url_for('Customers') }}">Customers</a>  
+        <ul>
+          <li><a href="{{ url_for('createCustomer') }}">Add New Customer</a>
+          <li><a href="{{ url_for('updateCustomer') }}">Update Customer</a>  
+        </ul>
+
+      <li><a href="{{ url_for('Vehicles') }}">Vehicles</a> 
+      <ul>
+          <li><a href="{{ url_for('createVehicle') }}">Add New Vehicle</a>
+          <li><a href="{{ url_for('updateVehicle') }}">Update Vehicle</a>  
+      </ul> 
+
+      <li><a href="{{ url_for('Sales') }}">Sales</a>
+        <ul>
+            <li><a href="{{ url_for('createSale') }}">Add New Sale</a>
+            <li><a href="{{ url_for('updateSale') }}">Update Sale</a>  
+        </ul>
+  </ul>
+</nav>
+
+<section class="content">
+  <header>
+
+    {% block header %}{% endblock %}
+  </header>
+
+  {% block body %}
+  {% endblock %}
+</section>
+

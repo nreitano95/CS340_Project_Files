@@ -1,0 +1,25 @@
+{% extends "main.j2" %}
+
+<title>{% block title %}Sales{% endblock %}</title>
+
+  <header>
+    {% block header %}
+    <h1>Sales Page</h1>
+    {% endblock %}
+  </header>
+  
+  {% block body %}
+
+  <h3>Subpages</h3>
+  <ul>
+    <li><a href="{{ url_for('createSale') }}">Add New Sale</a>
+    <li><a href="{{ url_for('updateSale') }}">Update Sale</a>  
+  </ul>
+
+  <h3>Sales Search</h3>
+    <form>
+      <input type="text" placeholder="Search...">
+      <input type="submit" value="Submit">
+    </form>
+  
+  {% endblock %}

@@ -1,0 +1,25 @@
+{% extends "main.j2" %}
+
+<title>{% block title %}Customers{% endblock %}</title>
+
+  <header>
+    {% block header %}
+    <h1>Customers Page</h1>
+    {% endblock %}
+  </header>
+
+  {% block body %}
+
+  <h3>Subpages</h3>
+  <ul>
+    <li><a href="{{ url_for('createCustomer') }}">Add New Customer</a>
+    <li><a href="{{ url_for('updateCustomer') }}">Update Customer</a>  
+  </ul>
+
+  <h3>Customer Search</h3>
+    <form>
+      <input type="text" placeholder="Search...">
+      <input type="submit" value="Submit">
+    </form>
+  
+  {% endblock %}
