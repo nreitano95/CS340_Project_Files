@@ -8,6 +8,45 @@
 
   {% block body %}
   
-  {# Form to Add Employee #}
+  <form>
+  <div class="row">
+    <div class="six columns">
+      <label for="firstNameInput">First Name</label>
+      <input class="u-full-width" type="text" id="firstNameInput">
+    </div>
+    <div class="six columns">
+      <label for="lastNameInput">Last Name</label>
+      <input class="u-full-width" type="text" id="lastNameInput">
+    </div>
+  </div>
+  <div class="row">
+    <div class="six columns">
+      <label for="titleInput">Title</label>
+      <input class="u-full-width" type="text" id="titleInput">
+    </div>
+  </div>
+
+  # INSERT DATEPICKERS
+  
+  <div class="row">
+    <div class="six columns">
+      <label for="phoneInput">Phone</label>
+      <input class="u-full-width" type="tel" id="phoneInput">
+    </div>
+    <div class="six columns">
+      <label for="emailInput">Email</label>
+      <input class="u-full-width" type="email" id="emailInput">
+    </div>
+  </div>
+
+  <!--
+  <textarea class="u-full-width" placeholder="Hey guys …" id="exampleMessage"></textarea>
+  <label class="example-send-yourself-copy">
+    <input type="checkbox">
+    <span class="label-body">Send a copy to yourself</span>
+  </label> -->
+
+  <input class="button-primary" type="submit" value="Submit">
+</form>
   
   {% endblock %}
