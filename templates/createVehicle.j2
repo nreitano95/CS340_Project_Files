@@ -8,6 +8,53 @@
 
   {% block body %}
   
-  {# Form to Add #}
+  <form>
+  <div class="row">
+    <div class="six columns">
+      <label for="vinInput">VIN of Vehicle</label>
+      <input class="u-full-width" type="text" id="vinInput">
+
+      <label for="vehicleTypeInput">Vehicle Type</label>
+      <select name="vehicleTypeInput" id="vehicleTypeInput">
+        <option value="" disabled selected hidden>Select Vehicle Type</option>
+        <option value="coupe">Coupe</option>
+        <option value="hatchback">Hatchback</option>
+        <option value="sedan">Sedan</option>
+        <option value="suv">SUV</option>
+        <option value="truck">Truck</option>     
+        <option value="van">Van</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="six columns">
+      <label for="makeInput">Make</label>
+      <input class="u-half-width" type="text" id="makeInput">
+
+      <label for="modelInput">Model</label>
+      <input class="u-half-width" type="text" id="modelInput">
+
+      <label for="yearInput">Year</label>
+      <input class="u-half-width" type="text" id="yearInput">
+
+      <label for="colorInput">Color</label>
+      <input class="u-half-width" type="text" id="colorInput">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="six columns">
+      <label for="isPreOwnedInput">Is Pre-Owned?</label>
+      <input class="u-half-width" type="checkbox" id="isPreOwnedInput">
+
+      <label for="isForSaleInput">Is For Sale?</label>
+      <input class="u-half-width" type="checkbox" id="isForSaleInput">
+    </div>
+  </div>
+
+  <input class="button-primary" type="submit" value="Submit">
+</form>
+  
   
   {% endblock %}
