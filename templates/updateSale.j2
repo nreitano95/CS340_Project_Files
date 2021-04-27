@@ -3,11 +3,63 @@
 <title>{% block title %}Update Sale{% endblock %}</title>
 
   <header>
-    {% block header %}<h1>Update Sale Page</h1>{% endblock %}
+    {% block header %}<h1>Update Sale</h1>{% endblock %}
   </header>
 
   {% block body %}
   
-  {# Form to Update Sale Based on id #}
+ <form>
+  <div class="row">
+    <div class="six columns">
+      <label for="vinInput">VIN of Vehicle</label>
+      <input class="u-full-width" type="text" id="vinInput">
+    </div>
+    {# Employee_Customer_ID  #}
+    {# Employee can be a dynamically populating dropdown #}
+    <div class="six columns">
+      <label for="employeeInput">Employee</label>
+      <input class="u-full-width" type="text" id="employeeInput">
+    </div>
+  </div>
+    {# Vehicle can be a dynamically populating dropdown #}    
+  <div class="row">
+    <div class="six columns">
+      <label for="vehicleInput">Vehicle</label>
+      <input class="u-full-width" type="text" id="vehicleInput">
+    </div>    
+  </div>
+  
+  <div class="row">
+    <div class="six columns">
+      <label for="salePriceInput">Sale Price</label>
+      <span>$</span>
+      <input class="u-half-width" type="text" id="salePriceInput">
+    </div>
+
+    <div class="six columns">
+      <label for="saleDateInput">Sale Date</label>
+      <input class="u-half-width" type="date" id="saleDateInput">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="six columns">
+      <label for="hasCustomerPaidInput">Has Customer Paid?</label>
+      <input class="u-half-width" type="checkbox" id="hasCustomerPaidInput">
+    </div>
+  </div>
+
+  <!--
+  <textarea class="u-full-width" placeholder="Hey guys …" id="exampleMessage"></textarea>
+  <label class="example-send-yourself-copy">
+    <input type="checkbox">
+    <span class="label-body">Send a copy to yourself</span>
+  </label> -->
+
+  <input class="button-primary" type="submit" value="Submit">
+  <a class="button" href="{{ url_for('Sales') }}">Cancel</a>
+</form>
+
+<a class="button" href="{{ url_for('Sales') }}">Delete Sale</a>
   
   {% endblock %}

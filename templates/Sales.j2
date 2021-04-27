@@ -4,7 +4,7 @@
 
   <header>
     {% block header %}
-    <h1>Sales Page</h1>
+    <h1>Sales</h1>
     {% endblock %}
   </header>
   
@@ -31,6 +31,7 @@
       <th>Sale_Price</th>
       <th>Sale_Date</th>
       <th>Has Customer Paid?</th>
+      <th>Update</th>
     </tr>
   </thead>
   <tbody>
@@ -41,6 +42,7 @@
       <td>$12,400</td>
       <td>03/12/2019</td>
       <td>Yes</td>
+      <td><a href="{{ url_for('updateSale') }}">Edit</a></td>       
     </tr>
     <tr>
       <td>2</td>
@@ -49,6 +51,7 @@
       <td>$12,400</td>
       <td>03/12/2019</td>
       <td>No</td>
+      <td><a href="{{ url_for('updateSale') }}">Edit</a></td>       
     </tr>
   </tbody>
 </table>

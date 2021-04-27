@@ -4,7 +4,7 @@
 
   <header>
     {% block header %}
-    <h1>Employees Page</h1>
+    <h1>Employees</h1>
     {% endblock %}
   </header>
 
@@ -34,6 +34,8 @@
       <th>Date of Termination</th>
       <th>Phone</th>
       <th>Email</th>
+      <th>Update</th>
+
     </tr>
   </thead>
   <tbody>
@@ -46,6 +48,7 @@
       <td>NULL</td>
       <td>(123) 456-7890</td>
       <td>john.smith@beavmotors.com</td>
+      <td><a href="{{ url_for('updateEmployee') }}">Edit</a></td>
     </tr>
     <tr>
       <td>2</td>
@@ -56,6 +59,7 @@
       <td>NULL</td>
       <td>(123) 456-7890</td>
       <td>sally.stevens@beavmotors.com</td>
+      <td><a href="{{ url_for('updateEmployee') }}">Edit</a></td>      
     </tr>
   </tbody>
 </table>

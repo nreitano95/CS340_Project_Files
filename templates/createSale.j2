@@ -3,7 +3,7 @@
 <title>{% block title %}New Sale{% endblock %}</title>
 
   <header>
-    {% block header %}<h1>New Sale Page</h1>{% endblock %}
+    {% block header %}<h1>New Sale</h1>{% endblock %}
   </header>
 
   {% block body %}
@@ -20,6 +20,7 @@
       <label for="employeeInput">Employee</label>
       <input class="u-full-width" type="text" id="employeeInput">
     </div>
+  </div>
     {# Vehicle can be a dynamically populating dropdown #}    
   <div class="row">
     <div class="six columns">
@@ -56,6 +57,7 @@
   </label> -->
 
   <input class="button-primary" type="submit" value="Submit">
+  <a class="button" href="{{ url_for('Sales') }}">Cancel</a></form>  
 </form>
   
   {% endblock %}

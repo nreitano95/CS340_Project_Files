@@ -4,7 +4,7 @@
 
   <header>
     {% block header %}
-    <h1>Customers Page</h1>
+    <h1>Customers</h1>
     {% endblock %}
   </header>
 
@@ -32,6 +32,7 @@
       <th>City</th>
       <th>State</th>
       <th>Zip</th>
+      <th>Update</th>
     </tr>
   </thead>
   <tbody>
@@ -43,6 +44,7 @@
       <td>New York City</td>
       <td>NY</td>
       <td>10020</td>
+      <td><a href="{{ url_for('updateCustomer') }}">Edit</a></td>      
     </tr>
     <tr>
       <td>2</td>
@@ -52,6 +54,7 @@
       <td>St. Paul</td>
       <td>MN</td>
       <td>55473</td>
+      <td><a href="{{ url_for('updateCustomer') }}">Edit</a></td>       
     </tr>
   </tbody>
 </table>

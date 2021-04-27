@@ -4,7 +4,7 @@
 
   <header>
     {% block header %}
-    <h1>Vehicles Page</h1>
+    <h1>Vehicles</h1>
     {% endblock %}
   </header>
 
@@ -34,7 +34,8 @@
       <th>Color</th>
       <th>Is Pre-Owned?</th>
       <th>Is For Sale?</th>
-      <th>Sale ID</th>      
+      <th>Sale ID</th>
+      <th>Update</th>      
       
     </tr>
   </thead>
@@ -49,6 +50,7 @@
       <td>No</td>
       <td>Yes</td>
       <td>NULL</td>
+      <td><a href="{{ url_for('updateVehicle') }}">Edit</a></td>       
     </tr>
     <tr>
       <td>WVWAF93D258002461</td>
@@ -60,6 +62,7 @@
       <td>Yes</td>
       <td>Yes</td>
       <td>476</td>
+      <td><a href="{{ url_for('updateVehicle') }}">Edit</a></td>       
     </tr>
   </tbody>
 </table>

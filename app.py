@@ -76,7 +76,7 @@ def updateSale():
 
 # Listener 
 if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 8525))
+    port = int(os.environ.get('PORT', 8528))
     app.run(port=port, debug=True) 
 
 

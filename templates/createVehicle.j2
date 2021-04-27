@@ -3,7 +3,7 @@
 <title>{% block title %}Add Vehicle{% endblock %}</title>
 
   <header>
-    {% block header %}<h1>Add New Vehicle Page</h1>{% endblock %}
+    {% block header %}<h1>Add New Vehicle</h1>{% endblock %}
   </header>
 
   {% block body %}
@@ -54,6 +54,7 @@
   </div>
 
   <input class="button-primary" type="submit" value="Submit">
+  <a class="button" href="{{ url_for('Vehicles') }}">Cancel</a>
 </form>
   
   

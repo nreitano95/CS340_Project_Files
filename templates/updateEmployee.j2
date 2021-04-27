@@ -3,11 +3,62 @@
 <title>{% block title %}Update Employee{% endblock %}</title>
 
   <header>
-    {% block header %}<h1>Update Employee Page</h1>{% endblock %}
+    {% block header %}<h1>Update Employee</h1>{% endblock %}
   </header>
 
   {% block body %}
   
-  {# Form to Update Employee Based on id #}
+<form>
+  <div class="row">
+    <div class="six columns">
+      <label for="firstNameInput">First Name</label>
+      <input class="u-full-width" type="text" id="firstNameInput">
+    </div>
+    <div class="six columns">
+      <label for="lastNameInput">Last Name</label>
+      <input class="u-full-width" type="text" id="lastNameInput">
+    </div>
+  </div>
+  <div class="row">
+    <div class="six columns">
+      <label for="titleInput">Title</label>
+      <input class="u-full-width" type="text" id="titleInput">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="six columns">
+      <label for="dateOfHireInput">Date of Hire</label>
+      <input class="u-full-width" type="date" id="dateOfHireInput">
+    </div>
+    <div class="six columns">
+      <label for="dateOfTerminationInput">Date of Termination</label>
+      <input class="u-full-width" type="date" id="dateOfTerminationInput">
+    </div>
+  </div>
   
+  <div class="row">
+    <div class="six columns">
+      <label for="phoneInput">Phone</label>
+      <input class="u-full-width" type="tel" id="phoneInput">
+    </div>
+    <div class="six columns">
+      <label for="emailInput">Email</label>
+      <input class="u-full-width" type="email" id="emailInput">
+    </div>
+  </div>
+
+  <!--
+  <textarea class="u-full-width" placeholder="Hey guys …" id="exampleMessage"></textarea>
+  <label class="example-send-yourself-copy">
+    <input type="checkbox">
+    <span class="label-body">Send a copy to yourself</span>
+  </label> -->
+
+  <input class="button-primary" type="submit" value="Submit">
+  <a class="button" href="{{ url_for('Employees') }}">Cancel</a>
+</form>
+
+<a class="button" href="{{ url_for('Employees') }}">Delete Employee</a>
+
   {% endblock %}
