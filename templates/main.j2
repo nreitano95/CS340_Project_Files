@@ -4,6 +4,7 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='normalize.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='skeleton.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='custom.css') }}">
+  <link href="//fonts.googleapis.com/css?family=Raleway:400" rel="stylesheet" type="text/css">
 </head>
 
 
@@ -11,7 +12,6 @@
   {# Navigation Menu #}
   <nav>
     <h1>Rapid Beaver Motors</h1>
-    <h3>Index of Pages</h3>
     <div class="row">
       <div class="two columns"><a href="{{ url_for('root') }}">Home</a></div>
       <div class="two columns"><a href="{{ url_for('Employees') }}">Employees</a></div>
@@ -19,7 +19,7 @@
       <div class="two columns"><a href="{{ url_for('Vehicles') }}">Vehicles</a></div>
       <div class="two columns"><a href="{{ url_for('Sales') }}">Sales</a></div>
     </div>
-    <br>
+    <hr>
     <div class="row">
       <div class="offset-by-two two columns"><a href="{{ url_for('createEmployee') }}">Add New Employee</a></div>
       <div class="two columns"><a href="{{ url_for('createCustomer') }}">Add New Customer</a></div>
@@ -34,6 +34,24 @@
       <div class="two columns"><a href="{{ url_for('updateSale') }}">Update Sale</a>  
     </div>
   </nav>
+  <br>
+
+{# Possibly use as nav bar in the future:
+# <div class="navbar-spacer"></div>
+# <div class="row"?
+#   <nav class="offset-by-eight four columns navbar">
+#     <div class="container">
+#       <ul class="navbar-list">
+#         <li class="navbar-item"><a class="navbar-link" href="{{ url_for('root') }}">Home</a></li>
+#         <li class="navbar-item"><a class="navbar-link" href="{{ url_for('Employees') }}">Employees</a></li>
+#         <li class="navbar-item"><a class="navbar-link" href="{{ url_for('Customers') }}">Customers</a></li>
+#         <li class="navbar-item"><a class="navbar-link" href="{{ url_for('Sales') }}">Sales</a></li>
+#       </ul>
+#     </div>
+#   </nav>
+# </div> #}
+
+
 </div>
 
 <br>
