@@ -8,25 +8,48 @@
 
   {% block body %}
   
- <form>
+   <form>
   <div class="row">
-    <div class="six columns">
-      <label for="vinInput">VIN of Vehicle</label>
-      <input class="u-full-width" type="text" id="vinInput">
-    </div>
     {# Employee_Customer_ID  #}
     {# Employee can be a dynamically populating dropdown #}
     <div class="six columns">
       <label for="employeeInput">Employee</label>
-      <input class="u-full-width" type="text" id="employeeInput">
+      <select name="employeeInput" id="employeeInput">
+        <option value="" disabled selected hidden>Select Employee</option>
+        <option value="option1">Dynamically Populated Name 1</option>
+        <option value="option2">Dynamically Populated Name 2</option>
+        <option value="option3">Dynamically Populated Name 3</option>
+      </select>
     </div>
+      <a href="{{ url_for('createEmployee') }}">Add New Employee</a>
   </div>
+
+    {# Customer can be a dynamically populating dropdown #}    
+  <div class="row">
+    <div class="six columns">
+      <label for="customerInput">Customer</label>
+      <select name="customerInput" id="customerInput">
+        <option value="" disabled selected hidden>Select Customer</option>
+        <option value="option1">Dynamically Populated Customer Name 1</option>
+        <option value="option2">Dynamically Populated Customer Name 2</option>
+        <option value="option3">Dynamically Populated Customer Name 3</option>
+      </select>
+    </div>
+    <a href="{{ url_for('createCustomer') }}">Add New Customer</a>
+  </div>
+
     {# Vehicle can be a dynamically populating dropdown #}    
   <div class="row">
     <div class="six columns">
       <label for="vehicleInput">Vehicle</label>
-      <input class="u-full-width" type="text" id="vehicleInput">
-    </div>    
+      <select name="vehicleInput" id="vehicleInput">
+        <option value="" disabled selected hidden>Select Vehicle</option>
+        <option value="option1">Dynamically Populated Vehicle 1</option>
+        <option value="option2">Dynamically Populated Vehicle 2</option>
+        <option value="option3">Dynamically Populated Vehicle 3</option>
+      </select>
+    </div>
+    <a href="{{ url_for('createVehicle') }}">Add New Vehicle</a>
   </div>
   
   <div class="row">
@@ -49,15 +72,8 @@
     </div>
   </div>
 
-  <!--
-  <textarea class="u-full-width" placeholder="Hey guys …" id="exampleMessage"></textarea>
-  <label class="example-send-yourself-copy">
-    <input type="checkbox">
-    <span class="label-body">Send a copy to yourself</span>
-  </label> -->
-
   <input class="button-primary" type="submit" value="Submit">
-  <a class="button" href="{{ url_for('Sales') }}">Cancel</a>
+  <a class="button" href="{{ url_for('Sales') }}">Cancel</a></form>  
 </form>
 
 <a class="button" href="{{ url_for('Sales') }}">Delete Sale</a>
