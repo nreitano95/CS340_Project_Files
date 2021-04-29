@@ -73,10 +73,9 @@ def updateSale():
     return render_template("updateSale.j2")
 
 
-
 # Listener 
 if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 8528))
+    port = int(os.environ.get('PORT', 8530))
     app.run(port=port, debug=True) 
 
 
