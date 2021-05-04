@@ -1,0 +1,94 @@
+{% extends "main.j2" %}
+
+<title>{% block title %}Assign Salesperson{% endblock %}</title>
+
+  <header>
+    {% block header %}
+    
+    <h1>Assign Salesperson</h1>
+    <h4>(Create or Delete Rows from Employees_Customers_Map)</h4>
+
+    {% endblock %}
+  </header>
+
+  {% block body %}
+  
+  <form>
+  <div class="row">
+    {# Employee_Customer_ID  #}
+    {# Employee can be a dynamically populating dropdown #}
+
+
+    {# Vehicle can be a dynamically populating dropdown #}    
+  <div class="row">
+    <div class="six columns">
+      <label for="employeeInput">Employee</label>
+      <select name="employeeInput" id="employeeInput">
+        <option value="" disabled selected hidden>Select Employee</option>
+        <option value="option1">Dynamically Populated Employee 1</option>
+        <option value="option2">Dynamically Populated Employee 2</option>
+        <option value="option3">Dynamically Populated Employee 3</option>
+      </select>
+    </div>
+    <a href="{{ url_for('createEmployee') }}">Add New Employee</a>
+  </div>
+
+    {# Customer can be a dynamically populating dropdown #}    
+  <div class="row">
+    <div class="six columns">
+      <label for="customerInput">Customer</label>
+      <select name="customerInput" id="customerInput">
+        <option value="" disabled selected hidden>Select Customer</option>
+        <option value="option1">Dynamically Populated Customer Name 1</option>
+        <option value="option2">Dynamically Populated Customer Name 2</option>
+        <option value="option3">Dynamically Populated Customer Name 3</option>
+      </select>
+    </div>
+    <a href="{{ url_for('createCustomer') }}">Add New Customer</a>
+  </div>
+
+  <input class="button-primary" type="submit" value="Submit">
+  <a class="button" href="{{ url_for('root') }}">Cancel</a></form>  
+
+</form>
+
+  <h3>Employees_Customers_Map</h3>
+    <form>
+      <input type="text" placeholder="Search...">
+      <input type="submit" value="Submit">
+    </form>
+
+  
+  <table class="u-full-width">
+  <thead>
+    <tr>
+      <th>Employee_Customer_ID</th>
+      <th>Employee First Name</th>
+      <th>Employee Last Name</th>
+      <th>Customer First Name</th>
+      <th>Customer Last Name</th>
+      <th>Delete Employee_Customer</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>John</td>
+      <td>Smith</td>
+      <td>Ineeta</td>
+      <td>Carnow</td>
+
+      <td><a href="#">Delete</a></td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Joe</td>
+      <td>Blow</td>
+      <td>Ivanta</td>
+      <td>Truckplease</td>
+      <td><a href="#">Delete</a></td>      
+    </tr>
+  </tbody>
+</table>
+  
+  {% endblock %}
