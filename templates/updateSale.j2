@@ -8,21 +8,38 @@
 
   {% block body %}
   
-   <form>
-  <div class="row">
+  <form>
+ <div class="row">
     {# Employee_Customer_ID  #}
     {# Employee can be a dynamically populating dropdown #}
     <div class="six columns">
-      <label for="employeeInput">Employee_Customer_ID</label>
+      <label for="employeeInput">Employee</label>
       <select name="employeeInput" id="employeeInput">
-        <option value="" disabled selected hidden>Select Employee_Customer_ID</option>
-        <option value="option1">Dynamically Populated ID 1</option>
-        <option value="option2">Dynamically Populated ID 2</option>
-        <option value="option3">Dynamically Populated ID 3</option>
+        <option value="" disabled selected hidden>Select Employee</option>
+        <option value="option1">Dynamically Populated Employee 1</option>
+        <option value="option2">Dynamically Populated Employee 2</option>
+        <option value="option3">Dynamically Populated Employee 3</option>
       </select>
     </div>
-      <a href="{{ url_for('Employees_Customers_Map') }}">Find Employee_Customer_ID</a>
+    <p>Employee not found in dropdown?</p>
+    <a href="{{ url_for('createEmployee') }}">Add New Employee</a>
   </div>
+<br>
+    {# Customer can be a dynamically populating dropdown #}    
+  <div class="row">
+    <div class="six columns">
+      <label for="customerInput">Customer</label>
+      <select name="customerInput" id="customerInput">
+        <option value="" disabled selected hidden>Select Customer</option>
+        <option value="option1">Dynamically Populated Customer Name 1</option>
+        <option value="option2">Dynamically Populated Customer Name 2</option>
+        <option value="option3">Dynamically Populated Customer Name 3</option>
+      </select>
+    </div>
+    <p>Customer not found in dropdown?</p>
+    <a href="{{ url_for('createCustomer') }}">Add New Customer</a><br>
+    <a href="{{ url_for('Employees_Customers_Map') }}">Assign Salesperson</a>
+  </div><br>
 
     {# Vehicle can be a dynamically populating dropdown #}    
   <div class="row">
@@ -35,6 +52,7 @@
         <option value="option3">Dynamically Populated Vehicle 3</option>
       </select>
     </div>
+    <p>Vehicle not found in dropdown?</p>
     <a href="{{ url_for('createVehicle') }}">Add New Vehicle</a>
   </div>
   
