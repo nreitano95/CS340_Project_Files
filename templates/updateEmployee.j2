@@ -8,43 +8,43 @@
 
   {% block body %}
   
-<form>
+  <form method="POST">
   <div class="row">
     <div class="six columns">
       <label for="firstNameInput">First Name</label>
-      <input class="u-full-width" type="text" id="firstNameInput">
+      <input class="u-full-width" type="text" id="first_name" name="first_name" value="{{ request.form['first_name'] }}" required>
     </div>
     <div class="six columns">
       <label for="lastNameInput">Last Name</label>
-      <input class="u-full-width" type="text" id="lastNameInput">
+      <input class="u-full-width" type="text" id="last_name" name="last_name" value="{{ request.form['last_name'] }}" required>
     </div>
   </div>
   <div class="row">
     <div class="six columns">
       <label for="titleInput">Title</label>
-      <input class="u-full-width" type="text" id="titleInput">
+      <input class="u-full-width" type="text" id="title" name="title" value="{{ request.form['title'] }}" required>
     </div>
   </div>
 
   <div class="row">
     <div class="six columns">
       <label for="dateOfHireInput">Date of Hire</label>
-      <input class="u-full-width" type="date" id="dateOfHireInput">
+      <input class="u-full-width" type="date" id="date_of_hire" name="date_of_hire" value="{{ request.form['date_of_hire'] }}" required>
     </div>
     <div class="six columns">
       <label for="dateOfTerminationInput">Date of Termination</label>
-      <input class="u-full-width" type="date" id="dateOfTerminationInput">
+      <input class="u-full-width" type="date" id="date_of_termination" name="date_of_termination"value="{{ request.form['date_of_termination'] }}">
     </div>
   </div>
   
   <div class="row">
     <div class="six columns">
       <label for="phoneInput">Phone</label>
-      <input class="u-full-width" type="tel" id="phoneInput">
+      <input class="u-full-width" type="tel" id="phone" name="phone" value="{{ request.form['phone'] }}" required>
     </div>
     <div class="six columns">
       <label for="emailInput">Email</label>
-      <input class="u-full-width" type="email" id="emailInput">
+      <input class="u-full-width" type="email" id="email" name="email" value="{{ request.form['email'] }}" required>
     </div>
   </div>
 

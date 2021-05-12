@@ -1,4 +1,4 @@
-from flask import Flask, render_template, json
+from flask import Flask, render_template, json, request, flash
 
 import database.db_connector as db
 
@@ -22,12 +22,42 @@ def root():
 def Employees():
     return render_template("Employees.j2")
 
-@app.route('/create-employee')
+@app.route('/create-employee',  methods = ('GET', 'POST'))
 def createEmployee():
+    if request.method == 'POST':
+        first_name = request.form['first_name']
+        last_name = request.form['last_name']
+        title = request.form['title']
+        date_of_hire = request.form['date_of_hire']
+        date_of_termination = request.form['date_of_termination']
+        phone = request.form['phone']
+        email = request.form['email']
+        
+        query = "INSERT INTO Employees (first_name, last_name, title, date_of_hire, date_of_termination, phone, email) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+        cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(first_name, last_name, title, date_of_hire, date_of_termination, phone, email))
+        results = cursor.fetchall()
+        return render_template("Employees.j2")
+
     return render_template("createEmployee.j2")
+
 
 @app.route('/update-employee')
 def updateEmployee():
+    # query = "SELECT first_name, last_name, title, date_of_hire, date_of_termination, phone, email FROM Employees WHERE employee_id = " + str(id)
+
+    # if request.method == 'POST':
+    #     first_name = request.form['first_name']
+    #     last_name = request.form['last_name']
+    #     title = request.form['title']
+    #     date_of_hire = "1999-03-08"
+    #     date_of_termination = "1999-05-03"
+    #     phone = request.form['phone']
+    #     email = request.form['email']
+        
+    #     query = "INSERT INTO Employees (first_name, last_name, title, date_of_hire, date_of_termination, phone, email) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+    #     cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(first_name, last_name, title, date_of_hire, date_of_termination, phone, email))
+    #     results = cursor.fetchone()
+
     return render_template("updateEmployee.j2")
 
 
@@ -81,7 +111,7 @@ def Employees_Customers_Map():
 
 # Listener 
 if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 8531))
+    port = int(os.environ.get('PORT', 8532))
     app.run(port=port, debug=True) 
 
 
