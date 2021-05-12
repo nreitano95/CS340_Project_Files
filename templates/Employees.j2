@@ -13,7 +13,7 @@
   <h3>Subpages</h3>
   <ul>
     <li><a href="{{ url_for('createEmployee') }}">Add New Employee</a>
-    <li><a href="{{ url_for('updateEmployee') }}">Update Employee</a>  
+    {# <li><a href="{{ url_for('updateEmployee') }}">Update Employee</a>   #}
   </ul>
 
   <h3>Employee Search</h3>
@@ -39,28 +39,19 @@
     </tr>
   </thead>
   <tbody>
+  {% for employee in Employees %}
     <tr>
-      <td>1</td>
-      <td>John</td>
-      <td>Smith</td>
-      <td>Salesperson</td>
-      <td>04/16/2021</td>
-      <td>NULL</td>
-      <td>(123) 456-7890</td>
-      <td>john.smith@beavmotors.com</td>
-      <td><a href="{{ url_for('updateEmployee') }}">Edit</a></td>
+      <td>{{ employee['employee_id'] }}</td>
+      <td>{{ employee['first_name'] }}</td>
+      <td>{{ employee['last_name'] }}</td>
+      <td>{{ employee['title'] }}</td>
+      <td>{{ employee['date_of_hire'] }}</td>
+      <td>{{ employee['date_of_termination'] }}</td>
+      <td>{{ employee['phone'] }}</td>
+      <td>{{ employee['email'] }}</td>
+      <td><a class="action" href="{{ url_for('updateEmployee', id=employee['employee_id']) }}">Edit</a></td>
     </tr>
-    <tr>
-      <td>2</td>
-      <td>Sally</td>
-      <td>Stevens</td>
-      <td>Salesperson</td>
-      <td>04/10/2021</td>
-      <td>NULL</td>
-      <td>(123) 456-7890</td>
-      <td>sally.stevens@beavmotors.com</td>
-      <td><a href="{{ url_for('updateEmployee') }}">Edit</a></td>      
-    </tr>
+  {% endfor %}
   </tbody>
 </table>
   

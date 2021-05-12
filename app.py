@@ -1,4 +1,4 @@
-from flask import Flask, render_template, json, request, flash
+from flask import Flask, render_template, json, request, redirect, flash
 
 import database.db_connector as db
 
@@ -20,7 +20,11 @@ def root():
 # Employees
 @app.route('/employees')
 def Employees():
-    return render_template("Employees.j2")
+    query = "SELECT * FROM Employees;"
+    cursor = db.execute_query(db_connection=db_connection, query=query)
+    results = cursor.fetchall()
+
+    return render_template("Employees.j2", Employees=results)
 
 @app.route('/create-employee',  methods = ('GET', 'POST'))
 def createEmployee():
@@ -36,29 +40,40 @@ def createEmployee():
         query = "INSERT INTO Employees (first_name, last_name, title, date_of_hire, date_of_termination, phone, email) VALUES (%s, %s, %s, %s, %s, %s, %s)"
         cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(first_name, last_name, title, date_of_hire, date_of_termination, phone, email))
         results = cursor.fetchall()
-        return render_template("Employees.j2")
+        return redirect('/employees')
 
     return render_template("createEmployee.j2")
 
 
-@app.route('/update-employee')
-def updateEmployee():
-    # query = "SELECT first_name, last_name, title, date_of_hire, date_of_termination, phone, email FROM Employees WHERE employee_id = " + str(id)
 
-    # if request.method == 'POST':
-    #     first_name = request.form['first_name']
-    #     last_name = request.form['last_name']
-    #     title = request.form['title']
-    #     date_of_hire = "1999-03-08"
-    #     date_of_termination = "1999-05-03"
-    #     phone = request.form['phone']
-    #     email = request.form['email']
+def get_employee(id):
+    query = "SELECT first_name, last_name, title, date_of_hire, date_of_termination, phone, email FROM Employees WHERE employee_id =" + str(id)
+    cursor = db.execute_query(db_connection=db_connection, query=query)
+    employee = cursor.fetchone()
+
+    return employee
+
+@app.route('/<int:id>/update-employee', methods = ('GET', 'POST'))
+def updateEmployee(id):
+
+    employee = get_employee(id)
+
+    if request.method == 'POST':
+        first_name = request.form['first_name']
+        last_name = request.form['last_name']
+        title = request.form['title']
+        date_of_hire = "1999-03-08"
+        date_of_termination = "1999-05-03"
+        phone = request.form['phone']
+        email = request.form['email']
         
-    #     query = "INSERT INTO Employees (first_name, last_name, title, date_of_hire, date_of_termination, phone, email) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-    #     cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(first_name, last_name, title, date_of_hire, date_of_termination, phone, email))
-    #     results = cursor.fetchone()
+        query = "UPDATE Employees SET first_name=%s, last_name=%s, title=%s, date_of_hire=%s, date_of_termination=%s, phone=%s, email=%s WHERE employee_id=" + str(id)
+        cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(first_name, last_name, title, date_of_hire, date_of_termination, phone, email))
+        results = cursor.fetchall()
+        return redirect('/employees')
 
-    return render_template("updateEmployee.j2")
+
+    return render_template("updateEmployee.j2", employee=employee)
 
 
 # Customers
