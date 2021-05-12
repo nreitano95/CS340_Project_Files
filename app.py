@@ -47,11 +47,22 @@ def createEmployee():
 
 
 def get_employee(id):
-    query = "SELECT first_name, last_name, title, date_of_hire, date_of_termination, phone, email FROM Employees WHERE employee_id =" + str(id)
+    query = "SELECT employee_id, first_name, last_name, title, date_of_hire, date_of_termination, phone, email FROM Employees WHERE employee_id =" + str(id)
     cursor = db.execute_query(db_connection=db_connection, query=query)
     employee = cursor.fetchone()
 
     return employee
+
+@app.route('/<int:id>/delete', methods=('GET', 'POST'))
+def deleteEmployee(id):
+    employee = get_employee(id)
+
+    query = "DELETE FROM Employees WHERE employee_id = " + str(id)
+    cursor = db.execute_query(db_connection=db_connection, query=query)
+    results = cursor.fetchall()
+
+    return redirect('/employees')
+
 
 @app.route('/<int:id>/update-employee', methods = ('GET', 'POST'))
 def updateEmployee(id):

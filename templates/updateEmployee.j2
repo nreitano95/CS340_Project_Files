@@ -48,17 +48,14 @@
     </div>
   </div>
 
-  <!--
-  <textarea class="u-full-width" placeholder="Hey guys …" id="exampleMessage"></textarea>
-  <label class="example-send-yourself-copy">
-    <input type="checkbox">
-    <span class="label-body">Send a copy to yourself</span>
-  </label> -->
-
   <input class="button-primary" type="submit" value="Submit">
   <a class="button" href="{{ url_for('Employees') }}">Cancel</a>
 </form>
 
-<a class="button" href="{{ url_for('Employees') }}">Delete Employee</a>
+{# Delete Button #}
+<form action="{{ url_for('deleteEmployee', id=employee['employee_id']) }}" method="POST">
+  <input class="button" type="submit" value="Delete Employee">
+</form>
+
 
   {% endblock %}
