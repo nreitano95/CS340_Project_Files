@@ -73,8 +73,8 @@ def updateEmployee(id):
         first_name = request.form['first_name']
         last_name = request.form['last_name']
         title = request.form['title']
-        date_of_hire = "1999-03-08"
-        date_of_termination = "1999-05-03"
+        date_of_hire = request.form['date_of_hire']
+        date_of_termination = request.form['date_of_termination']
         phone = request.form['phone']
         email = request.form['email']
         
@@ -82,7 +82,6 @@ def updateEmployee(id):
         cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(first_name, last_name, title, date_of_hire, date_of_termination, phone, email))
         results = cursor.fetchall()
         return redirect('/employees')
-
 
     return render_template("updateEmployee.j2", employee=employee)
 
