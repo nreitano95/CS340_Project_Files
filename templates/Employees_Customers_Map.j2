@@ -25,9 +25,9 @@
       <label for="employeeInput">Employee</label>
       <select name="employeeInput" id="employeeInput">
         <option value="" disabled selected hidden>Select Employee</option>
-        <option value="option1">Dynamically Populated Employee 1</option>
-        <option value="option2">Dynamically Populated Employee 2</option>
-        <option value="option3">Dynamically Populated Employee 3</option>
+      {% for employee in Employees %}
+        <option value="{{ employee['first_name'] }}">{{ employee['first_name'] }} {{ employee['last_name'] }}</option>
+      {% endfor %}
       </select>
     </div>
     <a href="{{ url_for('createEmployee') }}">Add New Employee</a>
@@ -39,9 +39,9 @@
       <label for="customerInput">Customer</label>
       <select name="customerInput" id="customerInput">
         <option value="" disabled selected hidden>Select Customer</option>
-        <option value="option1">Dynamically Populated Customer Name 1</option>
-        <option value="option2">Dynamically Populated Customer Name 2</option>
-        <option value="option3">Dynamically Populated Customer Name 3</option>
+      {% for customer in Customers %}
+        <option value="{{ customer['first_name'] }}">{{ customer['customer_first_name'] }} {{ customer['customer_last_name'] }}</option>
+      {% endfor %}
       </select>
     </div>
     <a href="{{ url_for('createCustomer') }}">Add New Customer</a>

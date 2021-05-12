@@ -131,7 +131,16 @@ def updateSale():
 # Employees_Customers_Map (Assign Salesperson)
 @app.route('/assign-salesperson')
 def Employees_Customers_Map():
-    return render_template("Employees_Customers_Map.j2")
+    query = "SELECT * FROM Employees;"
+    cursor = db.execute_query(db_connection=db_connection, query=query)
+    Employees = cursor.fetchall()
+
+    query = "SELECT * FROM Customers;"
+    cursor = db.execute_query(db_connection=db_connection, query=query)
+    Customers = cursor.fetchall()
+
+
+    return render_template("Employees_Customers_Map.j2", Employees=Employees, Customers=Customers)
 
 
 # Listener 
