@@ -99,9 +99,9 @@ def Customers():
 
     return render_template("Customers.j2", Customers=results, Employees=Employees)
 
+
 @app.route('/create-customer', methods=('GET', 'POST'))
 def createCustomer():
-
     query = "SELECT * FROM Employees;"
     cursor = db.execute_query(db_connection=db_connection, query=query)
     Employees = cursor.fetchall()
@@ -122,9 +122,50 @@ def createCustomer():
 
     return render_template("createCustomer.j2", Employees=Employees)
 
-@app.route('/update-customer')
-def updateCustomer():
-    return render_template("updateCustomer.j2")
+
+def get_customer(id):
+    query = "SELECT customer_id, customer_first_name, customer_last_name, customer_street, customer_city, customer_state, customer_zip, favorite_employee FROM Customers WHERE customer_id =" + str(id)
+    cursor = db.execute_query(db_connection=db_connection, query=query)
+    customer = cursor.fetchone()
+
+    return customer
+
+@app.route('/<int:id>/deleteCustomer', methods=('GET', 'POST'))
+def deleteCustomer(id):
+    customer = get_customer(id)
+    
+    query = "DELETE FROM Customers WHERE customer_id = " + str(id)
+    cursor = db.execute_query(db_connection=db_connection, query=query)
+    results = cursor.fetchall()
+
+    return redirect('/customers')
+
+
+@app.route('/<int:id>/update-customer', methods=('GET', 'POST'))
+def updateCustomer(id):
+
+    customer = get_customer(id)
+
+    if request.method == 'POST':
+        customer_first_name = request.form['customer_first_name']
+        customer_last_name = request.form['customer_last_name']
+        customer_street = request.form['customer_street']
+        customer_city = request.form['customer_city']
+        customer_state = request.form['customer_state']
+        customer_zip = request.form['customer_zip']
+        favorite_employee = request.form['favorite_employee']
+        
+        query = "UPDATE Customers SET customer_first_name=%s, customer_last_name=%s, customer_street=%s, customer_city=%s, customer_state=%s, customer_zip=%s, favorite_employee=%s WHERE customer_id=" + str(id)
+        cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(customer_first_name, customer_last_name, customer_street, customer_city, customer_state, customer_zip, favorite_employee))
+        results = cursor.fetchall()
+        return redirect('/customers')
+
+    query = "SELECT * FROM Employees;"
+    cursor = db.execute_query(db_connection=db_connection, query=query)
+    Employees = cursor.fetchall()
+
+
+    return render_template("updateCustomer.j2", customer=customer, Employees=Employees)
 
 
 # Vehicles

@@ -8,96 +8,116 @@
 
   {% block body %}
   
- <form>
-  <div class="row">
-    <div class="six columns">
-      <label for="firstNameInput">First Name</label>
-      <input class="u-full-width" type="text" id="firstNameInput">
-    </div>
-    
-    <div class="six columns">
-      <label for="lastNameInput">Last Name</label>
-      <input class="u-full-width" type="text" id="lastNameInput">
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="six columns">
-      <label for="titleInput">Street Address</label>
-      <input class="u-full-width" type="text" id="streetInput">
+  <form method='POST'>
+    <div class="row">
+      <div class="six columns">
+        <label for="firstNameInput">First Name</label>
+        <input class="u-full-width" type="text" id="customer_first_name" name="customer_first_name" value="{{ request.form['customer_first_name'] or customer['customer_first_name'] }}" required>
+      </div>
+      
+      <div class="six columns">
+        <label for="lastNameInput">Last Name</label>
+        <input class="u-full-width" type="text" id="customer_last_name" name="customer_last_name" value="{{ request.form['customer_last_name'] or customer['customer_last_name'] }}" required>
+      </div>
     </div>
 
-    <div class="six columns">
-      <label for="stateInput">State</label>
-      <select>
-        <option value="" disabled selected hidden>Select State</option>
+    <div class="row">
+      <div class="six columns">
+        <label for="streetInput">Street Address</label>
+        <input class="u-full-width" type="text" id="customer_street" name="customer_street" value="{{ request.form['customer_street'] or customer['customer_street']}}" required>
+      </div>
+    </div>
 
-        <option value="AL">Alabama</option>
-        <option value="AK">Alaska</option>
-        <option value="AZ">Arizona</option>
-        <option value="AR">Arkansas</option>
-        <option value="CA">California</option>
-        <option value="CO">Colorado</option>
-        <option value="CT">Connecticut</option>
-        <option value="DE">Delaware</option>
-        <option value="DC">District Of Columbia</option>
-        <option value="FL">Florida</option>
-        <option value="GA">Georgia</option>
-        <option value="HI">Hawaii</option>
-        <option value="ID">Idaho</option>
-        <option value="IL">Illinois</option>
-        <option value="IN">Indiana</option>
-        <option value="IA">Iowa</option>
-        <option value="KS">Kansas</option>
-        <option value="KY">Kentucky</option>
-        <option value="LA">Louisiana</option>
-        <option value="ME">Maine</option>
-        <option value="MD">Maryland</option>
-        <option value="MA">Massachusetts</option>
-        <option value="MI">Michigan</option>
-        <option value="MN">Minnesota</option>
-        <option value="MS">Mississippi</option>
-        <option value="MO">Missouri</option>
-        <option value="MT">Montana</option>
-        <option value="NE">Nebraska</option>
-        <option value="NV">Nevada</option>
-        <option value="NH">New Hampshire</option>
-        <option value="NJ">New Jersey</option>
-        <option value="NM">New Mexico</option>
-        <option value="NY">New York</option>
-        <option value="NC">North Carolina</option>
-        <option value="ND">North Dakota</option>
-        <option value="OH">Ohio</option>
-        <option value="OK">Oklahoma</option>
-        <option value="OR">Oregon</option>
-        <option value="PA">Pennsylvania</option>
-        <option value="RI">Rhode Island</option>
-        <option value="SC">South Carolina</option>
-        <option value="SD">South Dakota</option>
-        <option value="TN">Tennessee</option>
-        <option value="TX">Texas</option>
-        <option value="UT">Utah</option>
-        <option value="VT">Vermont</option>
-        <option value="VA">Virginia</option>
-        <option value="WA">Washington</option>
-        <option value="WV">West Virginia</option>
-        <option value="WI">Wisconsin</option>
-        <option value="WY">Wyoming</option>
-      </select>
-   
+    <div class="row">
+      <div class="six columns">
+        <label for="cityInput">City</label>
+        <input class="u-half-width" type="text" id="customer_city" name="customer_city" value="{{ request.form['customer_city'] or customer['customer_city'] }}" required>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="six columns">
+        <label for="stateInput">State</label>
+        <select id="customer_state" name="customer_state" value="{{ request.form['customer_state'] or customer['customer_state'] }}" required>
+          <option value="{{ customer['customer_state'] }}">{{ customer['customer_state'] }}</option>
+          <option value="AL">Alabama</option>
+          <option value="AK">Alaska</option>
+          <option value="AZ">Arizona</option>
+          <option value="AR">Arkansas</option>
+          <option value="CA">California</option>
+          <option value="CO">Colorado</option>
+          <option value="CT">Connecticut</option>
+          <option value="DE">Delaware</option>
+          <option value="DC">District Of Columbia</option>
+          <option value="FL">Florida</option>
+          <option value="GA">Georgia</option>
+          <option value="HI">Hawaii</option>
+          <option value="ID">Idaho</option>
+          <option value="IL">Illinois</option>
+          <option value="IN">Indiana</option>
+          <option value="IA">Iowa</option>
+          <option value="KS">Kansas</option>
+          <option value="KY">Kentucky</option>
+          <option value="LA">Louisiana</option>
+          <option value="ME">Maine</option>
+          <option value="MD">Maryland</option>
+          <option value="MA">Massachusetts</option>
+          <option value="MI">Michigan</option>
+          <option value="MN">Minnesota</option>
+          <option value="MS">Mississippi</option>
+          <option value="MO">Missouri</option>
+          <option value="MT">Montana</option>
+          <option value="NE">Nebraska</option>
+          <option value="NV">Nevada</option>
+          <option value="NH">New Hampshire</option>
+          <option value="NJ">New Jersey</option>
+          <option value="NM">New Mexico</option>
+          <option value="NY">New York</option>
+          <option value="NC">North Carolina</option>
+          <option value="ND">North Dakota</option>
+          <option value="OH">Ohio</option>
+          <option value="OK">Oklahoma</option>
+          <option value="OR">Oregon</option>
+          <option value="PA">Pennsylvania</option>
+          <option value="RI">Rhode Island</option>
+          <option value="SC">South Carolina</option>
+          <option value="SD">South Dakota</option>
+          <option value="TN">Tennessee</option>
+          <option value="TX">Texas</option>
+          <option value="UT">Utah</option>
+          <option value="VT">Vermont</option>
+          <option value="VA">Virginia</option>
+          <option value="WA">Washington</option>
+          <option value="WV">West Virginia</option>
+          <option value="WI">Wisconsin</option>
+          <option value="WY">Wyoming</option>
+        </select>
+      </div>
     </div>      
     
+    <div class="row">
       <label for="titleInput">Zip Code</label>
-      <input class="u-half-width" type="text" id="zipInput">
+      <input class="u-half-width" type="text" id="customer_zip" name="customer_zip" value="{{ request.form['customer_zip'] or customer['customer_zip']}}" required>
+    </div>
 
+    <div class="row">
       <label for="favoriteEmployee">Favorite Employee</label>
-      <select name="favoriteEmployee" id="favoriteEmployee">
-        <option value="" disabled selected hidden>Select Employee</option>
-        <option value="option1">Dynamically Populated Employee 1</option>
-        <option value="option2">Dynamically Populated Employee 2</option>
-        <option value="option3">Dynamically Populated Employee 3</option>
-      </select>
+      <select id="favorite_employee" name="favorite_employee" value="{{ customer['favorite_employee']}}">
+        <option value="">Select Employee</option>
+      {# {% for employee in Employees %}
+        <option value="{{ employee['employee_id'] }}">{{ employee['first_name'] }} {{ employee['last_name'] }}</option>
+      {% endfor %} #}    
 
+      {% for employee in Employees if customer['favorite_employee'] == employee['employee_id'] %}    
+        <option selected value="{{ employee['employee_id'] }}">{{ employee['first_name'] }} {{ employee['last_name'] }}</option>
+      {% endfor %}
+      {% for employee in Employees %}
+        <option value="{{ employee['employee_id'] }}">{{ employee['first_name'] }} {{ employee['last_name'] }}</option>
+      {% endfor %}   
+
+     
+      </select>
+    </div>
   </div>
 
 
@@ -105,6 +125,9 @@
   <a class="button" href="{{ url_for('Customers') }}">Cancel</a>
 </form>
   
-<a class="button" href="{{ url_for('Customers') }}">Delete Customer</a>
+{# Delete Button #}
+<form action="{{ url_for('deleteCustomer', id=customer['customer_id']) }}" method="POST">
+  <input class="button" type="submit" value="Delete Customer">
+</form>
 
   {% endblock %}
