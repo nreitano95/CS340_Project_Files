@@ -4,6 +4,8 @@ import database.db_connector as db
 
 import os
 
+import MySQLdb
+
 # Configuration
 
 app = Flask(__name__)
@@ -24,7 +26,7 @@ def Employees():
     query = "SELECT * FROM Employees;"
     cursor = db.execute_query(db_connection=db_connection, query=query)
     results = cursor.fetchall()
-
+    cursor.close()
     return render_template("Employees.j2", Employees=results)
 
 @app.route('/create-employee',  methods = ('GET', 'POST'))
@@ -41,8 +43,8 @@ def createEmployee():
         query = "INSERT INTO Employees (first_name, last_name, title, date_of_hire, date_of_termination, phone, email) VALUES (%s, %s, %s, %s, %s, %s, %s)"
         cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(first_name, last_name, title, date_of_hire, date_of_termination, phone, email))
         results = cursor.fetchall()
-        return redirect('/employees')
 
+        return redirect('/employees')
     return render_template("createEmployee.j2")
 
 
@@ -50,6 +52,7 @@ def get_employee(id):
     query = "SELECT employee_id, first_name, last_name, title, date_of_hire, date_of_termination, phone, email FROM Employees WHERE employee_id =" + str(id)
     cursor = db.execute_query(db_connection=db_connection, query=query)
     employee = cursor.fetchone()
+    cursor.close()
 
     return employee
 
@@ -92,10 +95,12 @@ def Customers():
     query = "SELECT * FROM Customers;"
     cursor = db.execute_query(db_connection=db_connection, query=query)
     results = cursor.fetchall()
+    cursor.close()
 
     query = "SELECT * FROM Employees;"
     cursor = db.execute_query(db_connection=db_connection, query=query)
     Employees = cursor.fetchall()
+    cursor.close()
 
     return render_template("Customers.j2", Customers=results, Employees=Employees)
 
@@ -105,6 +110,8 @@ def createCustomer():
     query = "SELECT * FROM Employees;"
     cursor = db.execute_query(db_connection=db_connection, query=query)
     Employees = cursor.fetchall()
+    cursor.close()
+
 
     if request.method == 'POST':
         customer_first_name = request.form['customer_first_name']
@@ -118,6 +125,7 @@ def createCustomer():
         query = "INSERT INTO Customers (customer_first_name, customer_last_name, customer_street, customer_city, customer_state, customer_zip, favorite_employee) VALUES (%s, %s, %s, %s, %s, %s, %s)"
         cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(customer_first_name, customer_last_name, customer_street, customer_city, customer_state, customer_zip, favorite_employee))
         results = cursor.fetchall()
+        
         return redirect('/customers')
 
     return render_template("createCustomer.j2", Employees=Employees)
@@ -127,6 +135,7 @@ def get_customer(id):
     query = "SELECT customer_id, customer_first_name, customer_last_name, customer_street, customer_city, customer_state, customer_zip, favorite_employee FROM Customers WHERE customer_id =" + str(id)
     cursor = db.execute_query(db_connection=db_connection, query=query)
     customer = cursor.fetchone()
+    cursor.close()
 
     return customer
 
@@ -163,7 +172,7 @@ def updateCustomer(id):
     query = "SELECT * FROM Employees;"
     cursor = db.execute_query(db_connection=db_connection, query=query)
     Employees = cursor.fetchall()
-
+    cursor.close()
 
     return render_template("updateCustomer.j2", customer=customer, Employees=Employees)
 
@@ -174,6 +183,8 @@ def Vehicles():
     query = "SELECT * FROM Vehicles;"
     cursor = db.execute_query(db_connection=db_connection, query=query)
     results = cursor.fetchall()
+    cursor.close()
+
     return render_template("Vehicles.j2", Vehicles=results)
 
 @app.route('/create-vehicle', methods=('GET', 'POST'))
@@ -211,6 +222,7 @@ def get_vehicle(id):
     query = "SELECT vin, vehicle_type, make, model, year, color, is_preowned, is_for_sale, msrp FROM Vehicles WHERE vin=" + ('"%s"' % id)
     cursor = db.execute_query(db_connection=db_connection, query=query)
     vehicle = cursor.fetchone()
+    cursor.close()
 
     return vehicle
 
@@ -278,10 +290,12 @@ def Employees_Customers_Map():
     query = "SELECT * FROM Employees;"
     cursor = db.execute_query(db_connection=db_connection, query=query)
     Employees = cursor.fetchall()
+    cursor.close()
 
     query = "SELECT * FROM Customers;"
     cursor = db.execute_query(db_connection=db_connection, query=query)
     Customers = cursor.fetchall()
+    cursor.close()
 
 
     return render_template("Employees_Customers_Map.j2", Employees=Employees, Customers=Customers)

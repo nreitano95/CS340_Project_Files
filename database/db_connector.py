@@ -28,6 +28,7 @@ def execute_query(db_connection = None, query = None, query_params = ()):
     returns: A Cursor object as specified at https://www.python.org/dev/peps/pep-0249/#cursor-objects.
     You need to run .fetchall() or .fetchone() on that object to actually acccess the results.
     '''
+    db_connection.ping(True)
 
     if db_connection is None:
         print("No connection to the database found! Have you called connect_to_database() first?")
@@ -52,7 +53,9 @@ def execute_query(db_connection = None, query = None, query_params = ()):
     # this will actually commit any changes to the database. without this no
     # changes will be committed!
     db_connection.commit()
+
     return cursor
+
 
 if __name__ == '__main__':
     print("Executing a sample query on the database using the credentials from db_credentials.py")
