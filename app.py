@@ -179,8 +179,6 @@ def Vehicles():
 @app.route('/create-vehicle', methods=('GET', 'POST'))
 def createVehicle():
 
-
-
     if request.method == 'POST':
         vin = request.form['vin']
         vehicle_type = request.form['vehicle_type']
@@ -188,9 +186,17 @@ def createVehicle():
         model = request.form['model']
         year = request.form['year']
         color = request.form['color']
-        is_preowned = request.form['is_preowned']
-        is_for_sale = request.form['is_for_sale']
         msrp = request.form['msrp']
+
+        if request.form.get("is_preowned") == None:
+            is_preowned = 0
+        else: 
+            is_preowned = 1
+        
+        if request.form.get("is_for_sale") == None: 
+            is_for_sale = 0
+        else: 
+            is_for_sale = 1
 
             
         query = "INSERT INTO Vehicles (vin, vehicle_type, make, model, year, color, is_preowned, is_for_sale, msrp) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
@@ -220,7 +226,7 @@ def deleteVehicle(id):
     return redirect('/vehicles')
 
 
-@app.route('/<string:id>/update-vehicle')
+@app.route('/<string:id>/update-vehicle', methods=('GET', 'POST'))
 def updateVehicle(id):
     
     vehicle = get_vehicle(id)
@@ -232,10 +238,18 @@ def updateVehicle(id):
         year = request.form['year']
         color = request.form['color']
         msrp = request.form['msrp']
-        is_preowned = request.form['is_preowned']
-        is_for_sale = request.form['is_for_sale']
+
+        if request.form.get("is_preowned") == None:
+            is_preowned = 0
+        else: 
+            is_preowned = 1
+        
+        if request.form.get("is_for_sale") == None: 
+            is_for_sale = 0
+        else: 
+            is_for_sale = 1
             
-        query = "UPDATE Vehicles SET vehicle_type=%s, make=%s, model=%s, year=%s, color=%s, is_preowned=%s, is_for_sale=%s, msrp=%s WHERE vin=" + ('"%s"' % id)
+        query = "UPDATE Vehicles SET vehicle_type=%s, make=%s, model=%s, year=%s, color=%s, is_preowned=%s, is_for_sale=%s, msrp=%s WHERE vin=" + ('"{}"'.format(id))
         cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(vehicle_type, make, model, year, color, is_preowned, is_for_sale, msrp))
         results = cursor.fetchall()
         return redirect('/vehicles')

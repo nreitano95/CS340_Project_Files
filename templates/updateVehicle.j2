@@ -11,12 +11,9 @@
   <form method='POST'>
   <div class="row">
     <div class="six columns">
-      <label for="vinInput">VIN of Vehicle</label>
-      {# <input class="u-full-width" type="text" id="vin" name="vin" value="{{ request.form['vin'] or vehicle['vin'] }}" required> #}
-
       <label for="vehicleTypeInput">Vehicle Type</label>
-      <select name="vehicleTypeInput" id="vehicle_type" name="vehicle_type" value="{{ request.form['vehicle_type'] or vehicle['vehicle_type'] }}" required>
-        <option value="" disabled selected hidden>Select Vehicle Type</option>
+      <select id="vehicle_type" name="vehicle_type" value="{{ request.form['vehicle_type'] or vehicle['vehicle_type'] }}" required>
+        <option value="{{ vehicle['vehicle_type'] }}">{{ vehicle['vehicle_type'] }}</option>
         <option value="Coupe">Coupe</option>
         <option value="Hatchback">Hatchback</option>
         <option value="Sedan">Sedan</option>
@@ -47,17 +44,17 @@
     <div class="six columns">
       <label for="msrpInput">Suggested Retail Price</label>
       <span>$</span>
-      <input class="u-half-width" type="text" id="msrp" name="msrp" value="{{ request.form['msrp'] or vehicle['msrp']  }}" required>
+      <input class="u-half-width" type="text" id="msrp" name="msrp" value="{{ request.form['msrp'] or vehicle['msrp'] }}" required>
     </div>
   </div>
 
   <div class="row">
     <div class="six columns">
       <label for="isPreOwnedInput">Is Pre-Owned?</label>
-      <input class="u-half-width" type="checkbox" id="is_preowned" name="is_preowned" value="{{ request.form['is_preowned'] or vehicle['is_preowned']  }}">
+      <input class="u-half-width" type="checkbox" id="is_preowned" name="is_preowned">
 
       <label for="isForSaleInput">Is For Sale?</label>
-      <input class="u-half-width" type="checkbox" id="is_for_sale" name="is_for_sale" value="{{ request.form['is_for_sale'] or vehicle['is_for_sale']  }}">
+      <input class="u-half-width" type="checkbox" id="is_for_sale" name="is_for_sale">
     </div>
   </div>
 

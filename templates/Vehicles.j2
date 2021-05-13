@@ -47,8 +47,20 @@
       <td>{{ vehicle['model'] }}</td>
       <td>{{ vehicle['year'] }}</td>
       <td>{{ vehicle['color'] }}</td>
-      <td>{{ vehicle['is_preowned'] }}</td>
-      <td>{{ vehicle['is_for_sale'] }}</td>
+      <td>
+        {% if vehicle['is_preowned'] == 0 %}
+          No
+        {% else %}
+          Yes
+        {% endif %}
+      </td>
+      <td>
+        {% if vehicle['is_for_sale'] == 0 %}
+          No
+        {% else %}
+          Yes
+        {% endif %}
+      </td>
       <td>{{ vehicle['msrp'] }}</td>
       <td><a class="action" href="{{ url_for('updateVehicle', id=vehicle['vin']) }}">Edit</a></td>
     </tr>
