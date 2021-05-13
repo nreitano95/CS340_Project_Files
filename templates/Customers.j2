@@ -13,7 +13,6 @@
   <h3>Subpages</h3>
   <ul>
     <li><a href="{{ url_for('createCustomer') }}">Add New Customer</a>
-    <li><a href="{{ url_for('updateCustomer') }}">Update Customer</a>  
   </ul>
 
   <h3>Customer Search</h3>
@@ -31,31 +30,32 @@
       <th>Street Address</th>
       <th>City</th>
       <th>State</th>
-      <th>Zip</th>
+      <th>City</th>
+      <th>Favorite Employee</th>
       <th>Update</th>
     </tr>
   </thead>
   <tbody>
+  {% for customer in Customers %}
     <tr>
-      <td>1</td>
-      <td>John</td>
-      <td>Smith</td>
-      <td>123 Sesame Street</td>
-      <td>New York City</td>
-      <td>NY</td>
-      <td>10020</td>
-      <td><a href="{{ url_for('updateCustomer') }}">Edit</a></td>      
+      <td>{{ customer['customer_id'] }}</td>
+      <td>{{ customer['customer_first_name'] }}</td>
+      <td>{{ customer['customer_last_name'] }}</td>
+      <td>{{ customer['customer_street'] }}</td>
+      <td>{{ customer['customer_city'] }}</td>
+      <td>{{ customer['customer_state'] }}</td>
+      <td>{{ customer['customer_zip'] }}</td>
+      <td>
+        {% for employee in Employees if customer['favorite_employee'] == employee['employee_id']%}    
+          {{ employee['first_name'] }} {{ employee['last_name'] }}
+          {% else %}
+          None
+        {% endfor %}
+      </td>
+      <td><a class="action" href="{{ url_for('updateCustomer', id=customer['customer_id']) }}">Edit</a></td>
     </tr>
-    <tr>
-      <td>2</td>
-      <td>Sally</td>
-      <td>Stevens</td>
-      <td>368 Broadway Street</td>
-      <td>St. Paul</td>
-      <td>MN</td>
-      <td>55473</td>
-      <td><a href="{{ url_for('updateCustomer') }}">Edit</a></td>       
-    </tr>
+  {% endfor %}
+
   </tbody>
 </table>
 

@@ -18,6 +18,7 @@ def root():
 
 
 # Employees
+
 @app.route('/employees')
 def Employees():
     query = "SELECT * FROM Employees;"
@@ -43,7 +44,6 @@ def createEmployee():
         return redirect('/employees')
 
     return render_template("createEmployee.j2")
-
 
 
 def get_employee(id):
@@ -89,11 +89,38 @@ def updateEmployee(id):
 # Customers
 @app.route('/customers')
 def Customers():
-    return render_template("Customers.j2")
+    query = "SELECT * FROM Customers;"
+    cursor = db.execute_query(db_connection=db_connection, query=query)
+    results = cursor.fetchall()
 
-@app.route('/create-customer')
+    query = "SELECT * FROM Employees;"
+    cursor = db.execute_query(db_connection=db_connection, query=query)
+    Employees = cursor.fetchall()
+
+    return render_template("Customers.j2", Customers=results, Employees=Employees)
+
+@app.route('/create-customer', methods=('GET', 'POST'))
 def createCustomer():
-    return render_template("createCustomer.j2")
+
+    query = "SELECT * FROM Employees;"
+    cursor = db.execute_query(db_connection=db_connection, query=query)
+    Employees = cursor.fetchall()
+
+    if request.method == 'POST':
+        customer_first_name = request.form['customer_first_name']
+        customer_last_name = request.form['customer_last_name']
+        customer_street = request.form['customer_street']
+        customer_city = request.form['customer_city']
+        customer_state = request.form['customer_state']
+        customer_zip = request.form['customer_zip']
+        favorite_employee = request.form['favorite_employee']
+        
+        query = "INSERT INTO Customers (customer_first_name, customer_last_name, customer_street, customer_city, customer_state, customer_zip, favorite_employee) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+        cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(customer_first_name, customer_last_name, customer_street, customer_city, customer_state, customer_zip, favorite_employee))
+        results = cursor.fetchall()
+        return redirect('/customers')
+
+    return render_template("createCustomer.j2", Employees=Employees)
 
 @app.route('/update-customer')
 def updateCustomer():

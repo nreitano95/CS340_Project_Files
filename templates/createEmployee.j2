@@ -33,7 +33,7 @@
     </div>
     <div class="six columns">
       <label for="dateOfTerminationInput">Date of Termination</label>
-      <input class="u-full-width" type="date" id="date_of_termination" name="date_of_termination"value="{{ request.form['date_of_termination'] }}">
+      <input class="u-full-width" type="date" id="date_of_termination" name="date_of_termination" value="{{ request.form['date_of_termination'] }}">
     </div>
   </div>
   
@@ -48,12 +48,7 @@
     </div>
   </div>
 
-  <!--
-  <textarea class="u-full-width" placeholder="Hey guys …" id="exampleMessage"></textarea>
-  <label class="example-send-yourself-copy">
-    <input type="checkbox">
-    <span class="label-body">Send a copy to yourself</span>
-  </label> -->
+
 
   <input class="button-primary" type="submit" value="Submit">
   <a class="button" href="{{ url_for('Employees') }}">Cancel</a>
