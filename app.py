@@ -171,15 +171,77 @@ def updateCustomer(id):
 # Vehicles
 @app.route('/vehicles')
 def Vehicles():
-    return render_template("Vehicles.j2")
+    query = "SELECT * FROM Vehicles;"
+    cursor = db.execute_query(db_connection=db_connection, query=query)
+    results = cursor.fetchall()
+    return render_template("Vehicles.j2", Vehicles=results)
 
-@app.route('/create-vehicle')
+@app.route('/create-vehicle', methods=('GET', 'POST'))
 def createVehicle():
+
+
+
+    if request.method == 'POST':
+        vin = request.form['vin']
+        vehicle_type = request.form['vehicle_type']
+        make = request.form['make']
+        model = request.form['model']
+        year = request.form['year']
+        color = request.form['color']
+        is_preowned = request.form['is_preowned']
+        is_for_sale = request.form['is_for_sale']
+        msrp = request.form['msrp']
+
+            
+        query = "INSERT INTO Vehicles (vin, vehicle_type, make, model, year, color, is_preowned, is_for_sale, msrp) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
+        cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(vin, vehicle_type, make, model, year, color, is_preowned, is_for_sale, msrp))
+        results = cursor.fetchall()
+        return redirect('/vehicles')
+
     return render_template("createVehicle.j2")
 
-@app.route('/update-vehicle')
-def updateVehicle():
-    return render_template("updateVehicle.j2")
+def get_vehicle(id):
+
+    query = "SELECT vin, vehicle_type, make, model, year, color, is_preowned, is_for_sale, msrp FROM Vehicles WHERE vin=" + ('"%s"' % id)
+    cursor = db.execute_query(db_connection=db_connection, query=query)
+    vehicle = cursor.fetchone()
+
+    return vehicle
+
+@app.route('/<string:id>/deleteVehicle', methods=('GET', 'POST'))
+def deleteVehicle(id):
+
+    vehicle = get_vehicle(id)
+
+    query = "DELETE FROM Vehicles WHERE vin=" + ('"%s"' % id)
+    cursor = db.execute_query(db_connection=db_connection, query=query)
+    results = cursor.fetchall()
+
+    return redirect('/vehicles')
+
+
+@app.route('/<string:id>/update-vehicle')
+def updateVehicle(id):
+    
+    vehicle = get_vehicle(id)
+
+    if request.method == 'POST':
+        vehicle_type = request.form['vehicle_type']
+        make = request.form['make']
+        model = request.form['model']
+        year = request.form['year']
+        color = request.form['color']
+        msrp = request.form['msrp']
+        is_preowned = request.form['is_preowned']
+        is_for_sale = request.form['is_for_sale']
+            
+        query = "UPDATE Vehicles SET vehicle_type=%s, make=%s, model=%s, year=%s, color=%s, is_preowned=%s, is_for_sale=%s, msrp=%s WHERE vin=" + ('"%s"' % id)
+        cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(vehicle_type, make, model, year, color, is_preowned, is_for_sale, msrp))
+        results = cursor.fetchall()
+        return redirect('/vehicles')
+
+
+    return render_template("updateVehicle.j2", vehicle=vehicle)
 
 
 # Sales

@@ -104,9 +104,6 @@
       <label for="favoriteEmployee">Favorite Employee</label>
       <select id="favorite_employee" name="favorite_employee" value="{{ customer['favorite_employee']}}">
         <option value="">Select Employee</option>
-      {# {% for employee in Employees %}
-        <option value="{{ employee['employee_id'] }}">{{ employee['first_name'] }} {{ employee['last_name'] }}</option>
-      {% endfor %} #}    
 
       {% for employee in Employees if customer['favorite_employee'] == employee['employee_id'] %}    
         <option selected value="{{ employee['employee_id'] }}">{{ employee['first_name'] }} {{ employee['last_name'] }}</option>
@@ -115,7 +112,6 @@
         <option value="{{ employee['employee_id'] }}">{{ employee['first_name'] }} {{ employee['last_name'] }}</option>
       {% endfor %}   
 
-     
       </select>
     </div>
   </div>
