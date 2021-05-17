@@ -13,7 +13,6 @@
   <h3>Subpages</h3>
   <ul>
     <li><a href="{{ url_for('createSale') }}">Add New Sale</a>
-    <li><a href="{{ url_for('updateSale') }}">Update Sale</a>  
   </ul>
 
   <h3>Sales Search</h3>
@@ -25,7 +24,6 @@
   <table class="u-full-width">
   <thead>
     <tr>
-      <th>Sale Id</th>
       <th>VIN</th>
       <th>Employee_Customer_ID</th>
       <th>Sale_Price</th>
@@ -35,24 +33,22 @@
     </tr>
   </thead>
   <tbody>
+  {% for sale in Sales %}
     <tr>
-      <td>1</td>
-      <td>1FUJBGAN04HM86987</td>
-      <td>1</td>
-      <td>$12,400</td>
-      <td>03/12/2019</td>
-      <td>Yes</td>
-      <td><a href="{{ url_for('updateSale') }}">Edit</a></td>       
+      <td>{{ sale['vin'] }}</td>
+      <td>{{ sale['employee_customer_id'] }}</td>
+      <td>{{ sale['sale_price'] }}</td>
+      <td>{{ sale['sale_date'] }}</td>
+      <td>
+        {% if sale['has_customer_paid'] == 0 %}
+          No
+        {% else %}
+          Yes
+        {% endif %}
+      </td>
+      <td><a class="action" href="{{ url_for('updateSale', id=sale['sale_id']) }}">Edit</a></td>
     </tr>
-    <tr>
-      <td>2</td>
-      <td>WVWAF93D258002461</td>
-      <td>29</td>
-      <td>$12,400</td>
-      <td>03/12/2019</td>
-      <td>No</td>
-      <td><a href="{{ url_for('updateSale') }}">Edit</a></td>       
-    </tr>
+  {% endfor %}
   </tbody>
 </table>
 

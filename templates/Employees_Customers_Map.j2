@@ -13,39 +13,37 @@
 
   {% block body %}
   
-  <form>
+  <form method="POST">
   <div class="row">
-    {# Employee_Customer_ID  #}
-    {# Employee can be a dynamically populating dropdown #}
-
-
-    {# Vehicle can be a dynamically populating dropdown #}    
-  <div class="row">
-    <div class="six columns">
-      <label for="employeeInput">Employee</label>
-      <select name="employeeInput" id="employeeInput">
-        <option value="" disabled selected hidden>Select Employee</option>
-      {% for employee in Employees %}
-        <option value="{{ employee['first_name'] }}">{{ employee['first_name'] }} {{ employee['last_name'] }}</option>
-      {% endfor %}
-      </select>
+      <div class="six columns">
+        <label for="employeeInput">Employee</label>
+        <select id="employee_id" name="employee_id" value="{{ request.form['employee_id'] }}">
+          <option value="" selected>Select Employee</option>
+        {% for employee in Employees %}
+          <option value="{{ employee['employee_id'] }}">{{ employee['first_name'] }} {{ employee['last_name'] }}</option>
+        {% endfor %}
+        </select>
+      </div>
+      <p>Employee not found in dropdown?</p>
+      <a href="{{ url_for('createEmployee') }}">Add New Employee</a>
     </div>
-    <a href="{{ url_for('createEmployee') }}">Add New Employee</a>
   </div>
 
-    {# Customer can be a dynamically populating dropdown #}    
-  <div class="row">
-    <div class="six columns">
-      <label for="customerInput">Customer</label>
-      <select name="customerInput" id="customerInput">
-        <option value="" disabled selected hidden>Select Customer</option>
-      {% for customer in Customers %}
-        <option value="{{ customer['first_name'] }}">{{ customer['customer_first_name'] }} {{ customer['customer_last_name'] }}</option>
-      {% endfor %}
-      </select>
-    </div>
-    <a href="{{ url_for('createCustomer') }}">Add New Customer</a>
-  </div>
+  
+    <div class="row">
+      <div class="six columns">
+        <label for="customerInput">Customer</label>
+        <select id="customer_id" name="customer_id" value="{{ request.form['customer_id'] }}">
+          <option value="" selected>Select Customer</option>
+        {% for customer in Customers %}
+          <option value="{{ customer['customer_id'] }}">{{ customer['customer_first_name'] }} {{ customer['customer_last_name'] }}</option>
+        {% endfor %}
+        </select>
+      </div>
+      <p>Customer not found in dropdown?</p>
+      <a href="{{ url_for('createCustomer') }}">Add New Customer</a><br>
+      <a href="{{ url_for('Employees_Customers_Map') }}">Assign Salesperson</a>
+    </div><br>
 
   <input class="button-primary" type="submit" value="Submit">
   <a class="button" href="{{ url_for('root') }}">Cancel</a></form>  
@@ -71,23 +69,20 @@
     </tr>
   </thead>
   <tbody>
+  {% for employee_customer in Employees_Customers_Map %}
     <tr>
-      <td>1</td>
-      <td>John</td>
-      <td>Smith</td>
-      <td>Ineeta</td>
-      <td>Carnow</td>
-
-      <td><a href="#">Delete</a></td>
+      <td>{{ employee_customer['employee_customer_id'] }}</td>
+      {% for employee in Employees if employee['employee_id'] == employee_customer['employee_id'] %}
+        <td>{{ employee['first_name'] }}</td>
+        <td>{{ employee['last_name'] }}</td>
+      {% endfor %}
+      {% for customer in Customers if customer['customer_id'] == employee_customer['customer_id'] %}
+        <td>{{ customer['customer_first_name'] }}</td>
+        <td>{{ customer['customer_last_name'] }}</td>
+      {% endfor %}
+      <td><a class="action" href="{{ url_for('deleteEmployeeCustomer', id=employee_customer['employee_customer_id']) }}">Delete</a></td>
     </tr>
-    <tr>
-      <td>2</td>
-      <td>Joe</td>
-      <td>Blow</td>
-      <td>Ivanta</td>
-      <td>Truckplease</td>
-      <td><a href="#">Delete</a></td>      
-    </tr>
+  {% endfor %}
   </tbody>
 </table>
   

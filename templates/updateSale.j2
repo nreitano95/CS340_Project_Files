@@ -8,78 +8,82 @@
 
   {% block body %}
   
-  <form>
- <div class="row">
-    {# Employee_Customer_ID  #}
-    {# Employee can be a dynamically populating dropdown #}
-    <div class="six columns">
-      <label for="employeeInput">Employee</label>
-      <select name="employeeInput" id="employeeInput">
-        <option value="" disabled selected hidden>Select Employee</option>
-        <option value="option1">Dynamically Populated Employee 1</option>
-        <option value="option2">Dynamically Populated Employee 2</option>
-        <option value="option3">Dynamically Populated Employee 3</option>
-      </select>
-    </div>
-    <p>Employee not found in dropdown?</p>
-    <a href="{{ url_for('createEmployee') }}">Add New Employee</a>
-  </div>
-<br>
-    {# Customer can be a dynamically populating dropdown #}    
+<form method='POST'>
   <div class="row">
-    <div class="six columns">
-      <label for="customerInput">Customer</label>
-      <select name="customerInput" id="customerInput">
-        <option value="" disabled selected hidden>Select Customer</option>
-        <option value="option1">Dynamically Populated Customer Name 1</option>
-        <option value="option2">Dynamically Populated Customer Name 2</option>
-        <option value="option3">Dynamically Populated Customer Name 3</option>
-      </select>
+      {# Employee_Customer_ID  #}
+      {# Employee can be a dynamically populating dropdown #}
+      <div class="six columns">
+        <label for="employeeInput">Employee</label>
+        <select id="employee" name="employee" value="{{ request.form['employee'] or sale['employee']}}">
+          <option value="" selected>Select Employee</option>
+        {% for employee in Employees %}
+          <option value="{{ employee['employee_id'] }}">{{ employee['first_name'] }} {{ employee['last_name'] }}</option>
+        {% endfor %}
+        </select>
+      </div>
+      <p>Employee not found in dropdown?</p>
+      <a href="{{ url_for('createEmployee') }}">Add New Employee</a>
     </div>
-    <p>Customer not found in dropdown?</p>
-    <a href="{{ url_for('createCustomer') }}">Add New Customer</a><br>
-    <a href="{{ url_for('Employees_Customers_Map') }}">Assign Salesperson</a>
-  </div><br>
+  <br>
+      {# Customer can be a dynamically populating dropdown #}    
+    <div class="row">
+      <div class="six columns">
+        <label for="customerInput">Customer</label>
+        <select id="customer" name="customer" value="{{ request.form['customer'] or sale['customer'] }}">
 
-    {# Vehicle can be a dynamically populating dropdown #}    
-  <div class="row">
-    <div class="six columns">
-      <label for="vehicleInput">Vehicle</label>
-      <select name="vehicleInput" id="vehicleInput">
-        <option value="" disabled selected hidden>Select Vehicle</option>
-        <option value="option1">Dynamically Populated Vehicle 1</option>
-        <option value="option2">Dynamically Populated Vehicle 2</option>
-        <option value="option3">Dynamically Populated Vehicle 3</option>
-      </select>
+        {% for customer in Customers %}
+          <option value="{{ customer['customer_id'] }}">{{ customer['customer_first_name'] }} {{ customer['customer_last_name'] }}</option>
+        {% endfor %}
+        </select>
+      </div>
+      <p>Customer not found in dropdown?</p>
+      <a href="{{ url_for('createCustomer') }}">Add New Customer</a><br>
+      <a href="{{ url_for('Employees_Customers_Map') }}">Assign Salesperson</a>
+    </div><br>
+
+      {# Vehicle can be a dynamically populating dropdown #}    
+    <div class="row">
+      <div class="six columns">
+        <label for="vehicleInput">Vehicle</label>
+        <select id="vehicle" name="vehicle" value="{{ request.form['vehicle'] or sale['vehicle'] }}">
+          <option value="" selected>Select Vehicle</option>
+        {% for vehicle in Vehicles %}
+          <option value="{{ vehicle['vin'] }}">{{ vehicle['make'] }} {{ vehicle['model'] }}</option>
+        {% endfor %}
+        </select>
+      </div>
+      <p>Vehicle not found in dropdown?</p>
+      <a href="{{ url_for('createVehicle') }}">Add New Vehicle</a>
     </div>
-    <p>Vehicle not found in dropdown?</p>
-    <a href="{{ url_for('createVehicle') }}">Add New Vehicle</a>
-  </div>
-  
-  <div class="row">
-    <div class="six columns">
-      <label for="salePriceInput">Sale Price</label>
-      <span>$</span>
-      <input class="u-half-width" type="text" id="salePriceInput">
+    
+    <div class="row">
+      <div class="six columns">
+        <label for="salePriceInput">Sale Price</label>
+        <span>$</span>
+        <input class="u-half-width" type="text" id="sale_price" name="sale_price" value="{{ request.form['sale_price'] or sale['sale_price'] }}">
+      </div>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        <label for="saleDateInput">Sale Date</label>
+        <input class="u-half-width" type="date" id="sale_date" name="sale_date" value="{{ request.form['sale_date'] or sale['sale_date'] }}">
+      </div>
     </div>
 
-    <div class="six columns">
-      <label for="saleDateInput">Sale Date</label>
-      <input class="u-half-width" type="date" id="saleDateInput">
+    <div class="row">
+      <div class="six columns">
+        <label for="hasCustomerPaidInput">Has Customer Paid?</label>
+        <input class="u-half-width" type="checkbox" id="has_customer_paid" name="has_customer_paid">
+      </div>
     </div>
-  </div>
 
-  <div class="row">
-    <div class="six columns">
-      <label for="hasCustomerPaidInput">Has Customer Paid?</label>
-      <input class="u-half-width" type="checkbox" id="hasCustomerPaidInput">
-    </div>
-  </div>
-
-  <input class="button-primary" type="submit" value="Submit">
-  <a class="button" href="{{ url_for('Sales') }}">Cancel</a></form>  
+    <input class="button-primary" type="submit" value="Submit">
+    <a class="button" href="{{ url_for('Sales') }}">Cancel</a></form>   
 </form>
 
-<a class="button" href="{{ url_for('Sales') }}">Delete Sale</a>
+{# Delete Button #}
+<form action="{{ url_for('deleteSale', id=sale['sale_id']) }}" method="POST">
+  <input class="button" type="submit" value="Delete Sale">
+</form>
   
   {% endblock %}

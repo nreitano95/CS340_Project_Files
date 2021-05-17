@@ -273,19 +273,208 @@ def updateVehicle(id):
 # Sales
 @app.route('/sales')
 def Sales():
-    return render_template("Sales.j2")
+    
+    query = "SELECT * FROM Sales;"
+    cursor = db.execute_query(db_connection=db_connection, query=query)
+    results = cursor.fetchall()
+    cursor.close()
 
-@app.route('/create-sale')
+    return render_template("Sales.j2", Sales=results)
+
+@app.route('/create-sale', methods=('GET', 'POST'))
 def createSale():
-    return render_template("createSale.j2")
 
-@app.route('/update-sale')
-def updateSale():
-    return render_template("updateSale.j2")
+    query = "SELECT * FROM Employees;"
+    cursor = db.execute_query(db_connection=db_connection, query=query)
+    Employees = cursor.fetchall()
+    cursor.close()
+
+    query = "SELECT * FROM Customers;"
+    cursor = db.execute_query(db_connection=db_connection, query=query)
+    Customers = cursor.fetchall()
+    cursor.close()
+
+    query = "SELECT * FROM Vehicles;"
+    cursor = db.execute_query(db_connection=db_connection, query=query)
+    Vehicles = cursor.fetchall()
+    cursor.close()
+
+
+    if request.method == 'POST':
+        
+        employee = request.form['employee']
+        customer = request.form['customer']
+        vehicle = request.form['vehicle']
+        sale_price = request.form['sale_price']
+        sale_date = request.form['sale_date']
+        if request.form.get("has_customer_paid") == None:
+            has_customer_paid = 0
+        else: 
+            has_customer_paid = 1
+
+        # Get the VIN based on dropdown input
+        query = "SELECT * FROM Vehicles WHERE vin=" + ('"{}"'.format(vehicle))
+        cursor = db.execute_query(db_connection=db_connection, query=query)
+        vin = cursor.fetchone()
+
+        vin = vin['vin']
+
+        cursor.close()
+
+        # Get the employee_id based on dropdown input
+        query = "SELECT * FROM Employees WHERE employee_id=" + employee
+        cursor = db.execute_query(db_connection=db_connection, query=query)
+        employee_id = cursor.fetchone()
+
+        employee_id = employee_id['employee_id']
+
+        cursor.close()
+
+        # Get the customer_id based on dropdown input
+        query = "SELECT * FROM Customers WHERE customer_id=" + customer
+        cursor = db.execute_query(db_connection=db_connection, query=query)
+        customer_id = cursor.fetchone()
+        
+        customer_id = customer_id['customer_id']
+
+        cursor.close()
+
+        try: 
+            # Get the employee_customer_id based on employee and customer dropdown
+            query = "SELECT * FROM Employees_Customers_Map WHERE employee_id = " + str(employee_id) + " AND customer_id = " + str(customer_id)
+            cursor = db.execute_query(db_connection=db_connection, query=query)
+            employee_customer_id = cursor.fetchone()
+
+            employee_customer_id = employee_customer_id['employee_customer_id']
+
+            cursor.close()
+
+        except: 
+            query = "INSERT INTO Employees_Customers_Map (employee_id, customer_id) VALUES (%s, %s)"
+            cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(employee_id, customer_id))
+            results = cursor.fetchall()
+
+            # Get the employee_customer_id based on employee and customer dropdown
+            query = "SELECT * FROM Employees_Customers_Map WHERE employee_id = " + str(employee_id) + " AND customer_id = " + str(customer_id)
+            cursor = db.execute_query(db_connection=db_connection, query=query)
+            employee_customer_id = cursor.fetchone()
+
+            employee_customer_id = employee_customer_id['employee_customer_id']
+
+            cursor.close()
+
+        
+        # Add the sale with form inputs
+        query = "INSERT INTO Sales (vin, employee_customer_id, sale_price, sale_date, has_customer_paid) VALUES (%s, %s, %s, %s, %s)"
+        cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(vin, employee_customer_id, sale_price, sale_date, has_customer_paid))
+        results = cursor.fetchall()
+
+        return redirect('/sales')
+
+    return render_template("createSale.j2", Employees=Employees, Customers=Customers, Vehicles=Vehicles)
+
+
+def get_sale(id):
+
+    query = "SELECT sale_id, vin, employee_customer_id, sale_price, sale_date, has_customer_paid FROM Sales WHERE sale_id = " + str(id)
+    cursor = db.execute_query(db_connection=db_connection, query=query)
+    sale = cursor.fetchone()
+    cursor.close()
+
+    return sale
+
+@app.route('/<int:id>/deleteSale', methods=('GET', 'POST'))
+def deleteSale(id):
+
+    sale = get_sale(id)
+
+    query = "DELETE FROM Sales WHERE sale_id = " + str(id)
+    cursor = db.execute_query(db_connection=db_connection, query=query)
+    results = cursor.fetchall()
+
+    return redirect('/sales')
+
+
+@app.route('/<int:id>/update-sale', methods=('GET', 'POST'))
+def updateSale(id):
+
+    sale = get_sale(id)
+
+    query = "SELECT * FROM Employees;"
+    cursor = db.execute_query(db_connection=db_connection, query=query)
+    Employees = cursor.fetchall()
+    cursor.close()
+
+    query = "SELECT * FROM Customers;"
+    cursor = db.execute_query(db_connection=db_connection, query=query)
+    Customers = cursor.fetchall()
+    cursor.close()
+
+    query = "SELECT * FROM Vehicles;"
+    cursor = db.execute_query(db_connection=db_connection, query=query)
+    Vehicles = cursor.fetchall()
+    cursor.close()
+
+
+    if request.method == 'POST':
+        
+        employee = request.form['employee']
+        customer = request.form['customer']
+        vehicle = request.form['vehicle']
+        sale_price = request.form['sale_price']
+        sale_date = request.form['sale_date']
+        if request.form.get("has_customer_paid") == None:
+            has_customer_paid = 0
+        else: 
+            has_customer_paid = 1
+
+        # Get the VIN based on dropdown input
+        query = "SELECT * FROM Vehicles WHERE vin=" + ('"{}"'.format(vehicle))
+        cursor = db.execute_query(db_connection=db_connection, query=query)
+        vin = cursor.fetchone()
+
+        vin = vin['vin']
+
+        cursor.close()
+
+        # Get the employee_id based on dropdown input
+        query = "SELECT * FROM Employees WHERE employee_id=" + employee
+        cursor = db.execute_query(db_connection=db_connection, query=query)
+        employee_id = cursor.fetchone()
+
+        employee_id = employee_id['employee_id']
+
+        cursor.close()
+
+        # Get the customer_id based on dropdown input
+        query = "SELECT * FROM Customers WHERE customer_id=" + customer
+        cursor = db.execute_query(db_connection=db_connection, query=query)
+        customer_id = cursor.fetchone()
+        
+        customer_id = customer_id['customer_id']
+
+        cursor.close()
+
+        # Get the employee_customer_id based on employee and customer dropdown
+        query = "SELECT * FROM Employees_Customers_Map WHERE employee_id = " + str(employee_id) + " AND customer_id = " + str(customer_id)
+        cursor = db.execute_query(db_connection=db_connection, query=query)
+        employee_customer_id = cursor.fetchone()
+
+        employee_customer_id = employee_customer_id['employee_customer_id']
+
+        cursor.close()
+        
+        query = "UPDATE Sales SET vin=%s, employee_customer_id=%s, sale_price=%s, sale_date=%s, has_customer_paid=%s WHERE sale_id = " + str(id)
+        cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(vin, employee_customer_id, sale_price, sale_date, has_customer_paid))
+        results = cursor.fetchall()
+
+        return redirect('/sales')
+
+    return render_template("updateSale.j2", Employees=Employees, Customers=Customers, Vehicles=Vehicles, sale=sale)
 
 
 # Employees_Customers_Map (Assign Salesperson)
-@app.route('/assign-salesperson')
+@app.route('/assign-salesperson', methods=('GET', 'POST'))
 def Employees_Customers_Map():
     query = "SELECT * FROM Employees;"
     cursor = db.execute_query(db_connection=db_connection, query=query)
@@ -297,13 +486,47 @@ def Employees_Customers_Map():
     Customers = cursor.fetchall()
     cursor.close()
 
+    query = "SELECT * FROM Employees_Customers_Map;"
+    cursor = db.execute_query(db_connection=db_connection, query=query)
+    results = cursor.fetchall()
+    cursor.close()
 
-    return render_template("Employees_Customers_Map.j2", Employees=Employees, Customers=Customers)
 
+    if request.method == 'POST':
+        employee_id = request.form['employee_id']
+        customer_id = request.form['customer_id']
+
+        query = "INSERT INTO Employees_Customers_Map (employee_id, customer_id) VALUES (%s, %s)"
+        cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(employee_id, customer_id))
+        results = cursor.fetchall()
+        
+        return redirect('/assign-salesperson')
+
+    return render_template("Employees_Customers_Map.j2", Employees=Employees, Customers=Customers, Employees_Customers_Map=results)
+
+def get_employee_customer(id):
+
+    query = "SELECT * FROM Employees_Customers_Map WHERE employee_customer_id =" + str(id)
+    cursor = db.execute_query(db_connection=db_connection, query=query)
+    employee_customer = cursor.fetchone()
+    cursor.close()
+
+    return employee_customer
+
+@app.route('/<int:id>/deleteEmployeeCustomer', methods=('GET', 'POST'))
+def deleteEmployeeCustomer(id):
+
+    employee_customer = get_employee_customer(id)
+
+    query = "DELETE FROM Employees_Customers_Map WHERE employee_customer_id = " + str(id)
+    cursor = db.execute_query(db_connection=db_connection, query=query)
+    results = cursor.fetchall()
+
+    return redirect('/assign-salesperson')
 
 # Listener 
 if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 8530))
+    port = int(os.environ.get('PORT', 8532))
     app.run(port=port, debug=True) 
 
 
