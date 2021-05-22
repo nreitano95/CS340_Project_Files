@@ -20,14 +20,20 @@ def root():
 
 
 # Employees
-
 @app.route('/employees')
 def Employees():
+    searchTerm = request.args.get('searchTerm')
+
     query = "SELECT * FROM Employees;"
+    if searchTerm:
+        print("SearchTerm: ", searchTerm)
+        query = f'SELECT * FROM Employees WHERE first_name = "{searchTerm}" OR last_name = "{searchTerm}";'
+
     cursor = db.execute_query(db_connection=db_connection, query=query)
     results = cursor.fetchall()
     cursor.close()
     return render_template("Employees.j2", Employees=results)
+
 
 @app.route('/create-employee',  methods = ('GET', 'POST'))
 def createEmployee():
