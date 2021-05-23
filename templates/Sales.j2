@@ -15,11 +15,11 @@
     <li><a href="{{ url_for('createSale') }}">Add New Sale</a>
   </ul>
 
-  <h3>Sales Search</h3>
-    <form>
-      <input type="text" placeholder="Search...">
-      <input type="submit" value="Submit">
-    </form>
+  <h3>Sales Search by Vin</h3>
+  <form method='GET'>
+    <input type="search" placeholder="Search..." name="searchTerm"/>
+    <button type="submit">Search</button>
+  </form>
   
   <table class="u-full-width">
   <thead>

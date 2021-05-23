@@ -26,8 +26,7 @@ def Employees():
 
     query = "SELECT * FROM Employees;"
     if searchTerm:
-        print("SearchTerm: ", searchTerm)
-        query = f'SELECT * FROM Employees WHERE first_name = "{searchTerm}" OR last_name = "{searchTerm}";'
+        query = f'SELECT * FROM Employees WHERE first_name LIKE "%%{searchTerm}%%" OR last_name LIKE "%%{searchTerm}%%";'
 
     cursor = db.execute_query(db_connection=db_connection, query=query)
     results = cursor.fetchall()
@@ -99,6 +98,11 @@ def updateEmployee(id):
 @app.route('/customers')
 def Customers():
     query = "SELECT * FROM Customers;"
+
+    searchTerm = request.args.get('searchTerm')
+    if searchTerm:
+        query = f'SELECT * FROM Customers WHERE customer_first_name LIKE "%%{searchTerm}%%" OR customer_last_name LIKE "%%{searchTerm}%%";'
+
     cursor = db.execute_query(db_connection=db_connection, query=query)
     results = cursor.fetchall()
     cursor.close()
@@ -187,6 +191,10 @@ def updateCustomer(id):
 @app.route('/vehicles')
 def Vehicles():
     query = "SELECT * FROM Vehicles;"
+    searchTerm = request.args.get('searchTerm')
+    if searchTerm:
+        query = f'SELECT * FROM Vehicles WHERE vehicle_type LIKE "%%{searchTerm}%%" OR make LIKE "%%{searchTerm}%%" OR model LIKE "%%{searchTerm}%%";'
+
     cursor = db.execute_query(db_connection=db_connection, query=query)
     results = cursor.fetchall()
     cursor.close()
@@ -279,8 +287,11 @@ def updateVehicle(id):
 # Sales
 @app.route('/sales')
 def Sales():
-    
     query = "SELECT * FROM Sales;"
+    searchTerm = request.args.get('searchTerm')
+    if searchTerm:
+        query = f'SELECT * FROM Sales WHERE vin LIKE "%%{searchTerm}%%";'
+        
     cursor = db.execute_query(db_connection=db_connection, query=query)
     results = cursor.fetchall()
     cursor.close()

@@ -15,11 +15,11 @@
     <li><a href="{{ url_for('createVehicle') }}">Add New Vehicle</a>
   </ul>
   
-  <h3>Vehicle Search</h3>
-    <form>
-      <input type="text" placeholder="Search...">
-      <input type="submit" value="Submit">
-    </form>
+  <h3>Vehicle Search by type, make, model, or year</h3>
+  <form method='GET'>
+    <input type="search" placeholder="Search..." name="searchTerm"/>
+    <button type="submit">Search</button>
+  </form>
 
 
   <table class="u-full-width">

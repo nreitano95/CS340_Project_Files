@@ -15,11 +15,11 @@
     <li><a href="{{ url_for('createCustomer') }}">Add New Customer</a>
   </ul>
 
-  <h3>Customer Search</h3>
-    <form>
-      <input type="text" placeholder="Search...">
-      <input type="submit" value="Submit">
-    </form>
+  <h3>Customer Search by first or last name</h3>
+  <form method='GET'>
+    <input type="search" placeholder="Search..." name="searchTerm"/>
+    <button type="submit">Search</button>
+  </form>
 
   <table class="u-full-width">
   <thead>
