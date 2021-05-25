@@ -10,10 +10,9 @@
 
   {% block body %}
 
-  <h3>Subpages</h3>
-  <ul>
-    <li><a href="{{ url_for('createEmployee') }}">Add New Employee</a>
-  </ul>
+  <form action="{{ url_for('createEmployee') }}">
+    <button class="button-primary" type="submit">Add New Employee</button>
+  </form>
 
   <h3>Employee Search by First or Last Name or Title</h3>
   <form method='GET'>

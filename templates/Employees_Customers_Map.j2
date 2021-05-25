@@ -17,7 +17,7 @@
   <div class="row">
       <div class="six columns">
         <label for="employeeInput">Employee</label>
-        <select id="employee_id" name="employee_id" value="{{ request.form['employee_id'] }}">
+        <select id="employee_id" name="employee_id" value="{{ request.form['employee_id'] }}" required>
           <option value="" selected>Select Employee</option>
         {% for employee in Employees %}
           <option value="{{ employee['employee_id'] }}">{{ employee['first_name'] }} {{ employee['last_name'] }}</option>
@@ -33,7 +33,7 @@
     <div class="row">
       <div class="six columns">
         <label for="customerInput">Customer</label>
-        <select id="customer_id" name="customer_id" value="{{ request.form['customer_id'] }}">
+        <select id="customer_id" name="customer_id" value="{{ request.form['customer_id'] }}" required>
           <option value="" selected>Select Customer</option>
         {% for customer in Customers %}
           <option value="{{ customer['customer_id'] }}">{{ customer['customer_first_name'] }} {{ customer['customer_last_name'] }}</option>
@@ -42,8 +42,8 @@
       </div>
       <p>Customer not found in dropdown?</p>
       <a href="{{ url_for('createCustomer') }}">Add New Customer</a><br>
-      <a href="{{ url_for('Employees_Customers_Map') }}">Assign Salesperson</a>
-    </div><br>
+    </div>
+    <br>
 
   <input class="button-primary" type="submit" value="Submit">
   <a class="button" href="{{ url_for('root') }}">Cancel</a></form>  
@@ -51,11 +51,6 @@
 </form>
 
   <h3>Employees_Customers_Map</h3>
-    <form>
-      <input type="text" placeholder="Search...">
-      <input type="submit" value="Submit">
-    </form>
-
   
   <table class="u-full-width">
   <thead>

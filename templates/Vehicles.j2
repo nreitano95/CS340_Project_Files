@@ -10,12 +10,11 @@
 
   {% block body %}
 
-  <h3>Subpages</h3>
-  <ul>
-    <li><a href="{{ url_for('createVehicle') }}">Add New Vehicle</a>
-  </ul>
+  <form action="{{ url_for('createVehicle') }}">
+    <button class="button-primary" type="submit">Add New Vehicle</button>
+  </form>
   
-  <h3>Vehicle Search by type, make, model, year, or color</h3>
+  <h3>Vehicle Search by Type, Make, Model, Year, or Color</h3>
   <form method='GET'>
     <input type="search" placeholder="Search..." name="searchTerm"/>
     <button type="submit">Search</button>
