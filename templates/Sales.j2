@@ -15,7 +15,7 @@
     <li><a href="{{ url_for('createSale') }}">Add New Sale</a>
   </ul>
 
-  <h3>Sales Search by Vin</h3>
+  <h3>Sales Search by Employee Name, Customer Name, Make, or Model</h3>
   <form method='GET'>
     <input type="search" placeholder="Search..." name="searchTerm"/>
     <button type="submit">Search</button>
@@ -27,7 +27,11 @@
   <thead>
     <tr>
       <th>VIN</th>
-      <th>Employee_Customer_ID</th>
+      <th>Employee Customer ID</th>
+      <th>Make</th>
+      <th>Model</th>      
+      <th>Employee Name</th>
+      <th>Customer Name</th>      
       <th>Sale_Price</th>
       <th>Sale_Date</th>
       <th>Has Customer Paid?</th>
@@ -38,7 +42,22 @@
   {% for sale in Sales %}
     <tr>
       <td>{{ sale['vin'] }}</td>
-      <td>{{ sale['employee_customer_id'] }}</td>
+      <td>{{ sale['employee_customer_id'] }}
+      {% for vehicle in Vehicles if vehicle['vin'] == sale['vin'] %}
+        <td>{{ vehicle['make'] }}</td>
+        <td>{{ vehicle['model'] }}</td>
+      {% endfor %} 
+      {% for employee_customer in Employees_Customers_Map if sale['employee_customer_id'] == employee_customer['employee_customer_id'] %}        
+        {% for employee in Employees if employee['employee_id'] == employee_customer['employee_id'] %}
+          <td>{{ employee['first_name'] }} {{ employee['last_name'] }}</td>
+        {% endfor %}
+        {% for customer in Customers if customer['customer_id'] == employee_customer['customer_id'] %}
+          <td>{{ customer['customer_first_name'] }} {{ customer['customer_last_name'] }}</td>
+        {% endfor %}      
+        {% else %}
+        <td>Removed</td>
+        <td>Removed</td>        
+      {% endfor %}
       <td>{{ sale['sale_price'] }}</td>
       <td>{{ sale['sale_date'] }}</td>
       <td>

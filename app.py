@@ -26,7 +26,7 @@ def Employees():
 
     query = "SELECT * FROM Employees ORDER BY last_name;"
     if searchTerm:
-        query = f'SELECT * FROM Employees WHERE first_name LIKE "%%{searchTerm}%%" OR last_name LIKE "%%{searchTerm}%%" ORDER BY last_name;'
+        query = f'SELECT * FROM Employees WHERE first_name LIKE "%%{searchTerm}%%" OR last_name LIKE "%%{searchTerm}%%" OR title LIKE "%%{searchTerm}%%"ORDER BY last_name;'
 
     cursor = db.execute_query(db_connection=db_connection, query=query)
     results = cursor.fetchall()
@@ -193,7 +193,7 @@ def Vehicles():
     query = "SELECT * FROM Vehicles ORDER BY make;"
     searchTerm = request.args.get('searchTerm')
     if searchTerm:
-        query = f'SELECT * FROM Vehicles WHERE vehicle_type LIKE "%%{searchTerm}%%" OR make LIKE "%%{searchTerm}%%" OR model LIKE "%%{searchTerm}%%" or year LIKE "%%{searchTerm}%%" ORDER BY make;'
+        query = f'SELECT * FROM Vehicles WHERE vehicle_type LIKE "%%{searchTerm}%%" OR make LIKE "%%{searchTerm}%%" OR model LIKE "%%{searchTerm}%%" or year LIKE "%%{searchTerm}%%" or color LIKE "%%{searchTerm}%%" ORDER BY make;'
 
     cursor = db.execute_query(db_connection=db_connection, query=query)
     results = cursor.fetchall()
@@ -287,16 +287,47 @@ def updateVehicle(id):
 # Sales
 @app.route('/sales')
 def Sales():
+
+    query = "SELECT * FROM Employees_Customers_Map;"
+    cursor = db.execute_query(db_connection=db_connection, query=query)
+    Employees_Customers_Map = cursor.fetchall()
+    cursor.close()
+
+    query = "SELECT * FROM Employees;"
+    cursor = db.execute_query(db_connection=db_connection, query=query)
+    Employees = cursor.fetchall()
+    cursor.close()
+
+    query = "SELECT * FROM Customers;"
+    cursor = db.execute_query(db_connection=db_connection, query=query)
+    Customers = cursor.fetchall()
+    cursor.close()
+
+    query = "SELECT * FROM Vehicles;"
+    cursor = db.execute_query(db_connection=db_connection, query=query)
+    Vehicles = cursor.fetchall()
+    cursor.close()
+
     query = "SELECT * FROM Sales;"
     searchTerm = request.args.get('searchTerm')
     if searchTerm:
-        query = f'SELECT * FROM Sales WHERE vin LIKE "%%{searchTerm}%%";'
-        
+        query = f"""SELECT * FROM Sales
+                INNER JOIN Vehicles ON Sales.vin = Vehicles.vin
+                INNER JOIN Employees_Customers_Map ON Sales.employee_customer_id = Employees_Customers_Map.employee_customer_id
+                INNER JOIN Employees ON Employees_Customers_Map.employee_id = Employees.employee_id
+                INNER JOIN Customers ON Employees_Customers_Map.customer_id = Customers.customer_id
+                WHERE Customers.customer_first_name LIKE "%%{searchTerm}%%"
+                OR Customers.customer_last_name LIKE "%%{searchTerm}%%"
+                OR Employees.first_name LIKE "%%{searchTerm}%%"
+                OR Employees.last_name LIKE "%%{searchTerm}%%"
+                OR Vehicles.make LIKE "%%{searchTerm}%%"
+                OR Vehicles.model LIKE "%%{searchTerm}%%";"""
+
     cursor = db.execute_query(db_connection=db_connection, query=query)
     results = cursor.fetchall()
     cursor.close()
 
-    return render_template("Sales.j2", Sales=results)
+    return render_template("Sales.j2", Sales=results, Employees_Customers_Map=Employees_Customers_Map, Employees=Employees, Customers=Customers, Vehicles=Vehicles)
 
 @app.route('/create-sale', methods=('GET', 'POST'))
 def createSale():
@@ -522,7 +553,6 @@ def Employees_Customers_Map():
     cursor = db.execute_query(db_connection=db_connection, query=query)
     results = cursor.fetchall()
     cursor.close()
-
 
     if request.method == 'POST':
         employee_id = request.form['employee_id']
