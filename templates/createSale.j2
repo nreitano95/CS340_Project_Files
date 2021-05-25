@@ -14,7 +14,7 @@
       {# Employee can be a dynamically populating dropdown #}
       <div class="six columns">
         <label for="employeeInput">Employee</label>
-        <select id="employee" name="employee" value="{{ request.form['employee'] }}">
+        <select id="employee" name="employee" value="{{ request.form['employee'] }}" required>
           <option value="" selected>Select Employee</option>
         {% for employee in Employees %}
           <option value="{{ employee['employee_id'] }}">{{ employee['first_name'] }} {{ employee['last_name'] }}</option>
@@ -29,7 +29,7 @@
     <div class="row">
       <div class="six columns">
         <label for="customerInput">Customer</label>
-        <select id="customer" name="customer" value="{{ request.form['customer'] }}">
+        <select id="customer" name="customer" value="{{ request.form['customer'] }}" required>
           <option value="" selected>Select Customer</option>
         {% for customer in Customers %}
           <option value="{{ customer['customer_id'] }}">{{ customer['customer_first_name'] }} {{ customer['customer_last_name'] }}</option>
@@ -45,7 +45,7 @@
     <div class="row">
       <div class="six columns">
         <label for="vehicleInput">Vehicle</label>
-        <select id="vehicle" name="vehicle" value="{{ request.form['vehicle'] }}">
+        <select id="vehicle" name="vehicle" value="{{ request.form['vehicle'] }}" required>
           <option value="" selected>Select Vehicle</option>
         {% for vehicle in Vehicles %}
           <option value="{{ vehicle['vin'] }}">{{ vehicle['make'] }} {{ vehicle['model'] }}</option>
@@ -60,13 +60,13 @@
       <div class="six columns">
         <label for="salePriceInput">Sale Price</label>
         <span>$</span>
-        <input class="u-half-width" type="text" id="sale_price" name="sale_price" value="{{ request.form['sale_price'] }}">
+        <input class="u-half-width" type="text" id="sale_price" name="sale_price" value="{{ request.form['sale_price'] }}" required>
       </div>
     </div>
     <div class="row">
       <div class="six columns">
         <label for="saleDateInput">Sale Date</label>
-        <input class="u-half-width" type="date" id="sale_date" name="sale_date" value="{{ request.form['sale_date'] }}">
+        <input class="u-half-width" type="date" id="sale_date" name="sale_date" value="{{ request.form['sale_date'] }}" required>
       </div>
     </div>
 
