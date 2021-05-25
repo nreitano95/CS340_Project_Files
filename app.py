@@ -193,7 +193,7 @@ def Vehicles():
     query = "SELECT * FROM Vehicles;"
     searchTerm = request.args.get('searchTerm')
     if searchTerm:
-        query = f'SELECT * FROM Vehicles WHERE vehicle_type LIKE "%%{searchTerm}%%" OR make LIKE "%%{searchTerm}%%" OR model LIKE "%%{searchTerm}%%";'
+        query = f'SELECT * FROM Vehicles WHERE vehicle_type LIKE "%%{searchTerm}%%" OR make LIKE "%%{searchTerm}%%" OR model LIKE "%%{searchTerm}%%" or year LIKE "%%{searchTerm}%%";'
 
     cursor = db.execute_query(db_connection=db_connection, query=query)
     results = cursor.fetchall()
@@ -472,14 +472,29 @@ def updateSale(id):
 
         cursor.close()
 
-        # Get the employee_customer_id based on employee and customer dropdown
-        query = "SELECT * FROM Employees_Customers_Map WHERE employee_id = " + str(employee_id) + " AND customer_id = " + str(customer_id)
-        cursor = db.execute_query(db_connection=db_connection, query=query)
-        employee_customer_id = cursor.fetchone()
+        try:
+            # Get the employee_customer_id based on employee and customer dropdown
+            query = "SELECT * FROM Employees_Customers_Map WHERE employee_id = " + str(employee_id) + " AND customer_id = " + str(customer_id)
+            cursor = db.execute_query(db_connection=db_connection, query=query)
+            employee_customer_id = cursor.fetchone()
 
-        employee_customer_id = employee_customer_id['employee_customer_id']
+            employee_customer_id = employee_customer_id['employee_customer_id']
 
-        cursor.close()
+            cursor.close()
+            
+        except: 
+            query = "INSERT INTO Employees_Customers_Map (employee_id, customer_id) VALUES (%s, %s)"
+            cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(employee_id, customer_id))
+            results = cursor.fetchall()
+
+            # Get the employee_customer_id based on employee and customer dropdown
+            query = "SELECT * FROM Employees_Customers_Map WHERE employee_id = " + str(employee_id) + " AND customer_id = " + str(customer_id)
+            cursor = db.execute_query(db_connection=db_connection, query=query)
+            employee_customer_id = cursor.fetchone()
+
+            employee_customer_id = employee_customer_id['employee_customer_id']
+
+            cursor.close()
         
         query = "UPDATE Sales SET vin=%s, employee_customer_id=%s, sale_price=%s, sale_date=%s, has_customer_paid=%s WHERE sale_id = " + str(id)
         cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(vin, employee_customer_id, sale_price, sale_date, has_customer_paid))
@@ -543,7 +558,7 @@ def deleteEmployeeCustomer(id):
 
 # Listener 
 if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 8532))
+    port = int(os.environ.get('PORT', 8534))
     app.run(port=port, debug=True) 
 
 
