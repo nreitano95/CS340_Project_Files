@@ -31,7 +31,7 @@ def Employees():
 
     # Set query to return rows specified by search term, else set the query to return all rows
     if searchTerm:
-        query = f'SELECT * FROM Employees WHERE first_name LIKE "%%{searchTerm}%%" OR last_name LIKE "%%{searchTerm}%%" OR title LIKE "%%{searchTerm}%%"ORDER BY last_name;'
+        query = f'SELECT * FROM Employees WHERE first_name LIKE "%%{searchTerm}%%" OR last_name LIKE "%%{searchTerm}%%" OR title LIKE "%%{searchTerm}%%" ORDER BY last_name;'
 
     # Execute query to display rows
     cursor = db.execute_query(db_connection=db_connection, query=query)
@@ -136,7 +136,7 @@ def Customers():
     cursor.close()
 
     # Get list of all rows for Dropdown 
-    query = "SELECT * FROM Employees;"
+    query = "SELECT * FROM Employees ORDER BY last_name;"
     cursor = db.execute_query(db_connection=db_connection, query=query)
     Employees = cursor.fetchall()
     cursor.close()
@@ -149,7 +149,7 @@ def createCustomer():
     """ Create a new row in the Customers table """
 
     # Get all rows for dropdown 
-    query = "SELECT * FROM Employees;"
+    query = "SELECT * FROM Employees ORDER BY last_name;"
     cursor = db.execute_query(db_connection=db_connection, query=query)
     Employees = cursor.fetchall()
     cursor.close()
@@ -223,7 +223,7 @@ def updateCustomer(id):
         return redirect('/customers')
 
     # Get all rows for dropdown 
-    query = "SELECT * FROM Employees;"
+    query = "SELECT * FROM Employees ORDER BY last_name;"
     cursor = db.execute_query(db_connection=db_connection, query=query)
     Employees = cursor.fetchall()
     cursor.close()
@@ -358,25 +358,25 @@ def Sales():
     cursor.close()
 
     # Get all rows for Dropdown 
-    query = "SELECT * FROM Employees;"
+    query = "SELECT * FROM Employees ORDER BY last_name;"
     cursor = db.execute_query(db_connection=db_connection, query=query)
     Employees = cursor.fetchall()
     cursor.close()
 
     # Get all rows for Dropdown 
-    query = "SELECT * FROM Customers;"
+    query = "SELECT * FROM Customers ORDER BY customer_last_name;"
     cursor = db.execute_query(db_connection=db_connection, query=query)
     Customers = cursor.fetchall()
     cursor.close()
 
     # Get all rows for Dropdown 
-    query = "SELECT * FROM Vehicles;"
+    query = "SELECT * FROM Vehicles ORDER BY make;"
     cursor = db.execute_query(db_connection=db_connection, query=query)
     Vehicles = cursor.fetchall()
     cursor.close()
 
     # Set query to select all rows 
-    query = "SELECT * FROM Sales;"
+    query = "SELECT * FROM Sales ORDER BY sale_date;"
 
     # Set search query string
     searchTerm = request.args.get('searchTerm')
@@ -407,19 +407,19 @@ def createSale():
     """ Create a new row in the Sales table"""
 
     # Get all rows for Dropdown 
-    query = "SELECT * FROM Employees;"
+    query = "SELECT * FROM Employees ORDER BY last_name;"
     cursor = db.execute_query(db_connection=db_connection, query=query)
     Employees = cursor.fetchall()
     cursor.close()
 
     # Get all rows for Dropdown 
-    query = "SELECT * FROM Customers;"
+    query = "SELECT * FROM Customers ORDER BY customer_last_name;"
     cursor = db.execute_query(db_connection=db_connection, query=query)
     Customers = cursor.fetchall()
     cursor.close()
 
     # Get all rows for Dropdown 
-    query = "SELECT * FROM Vehicles;"
+    query = "SELECT * FROM Vehicles ORDER BY make;"
     cursor = db.execute_query(db_connection=db_connection, query=query)
     Vehicles = cursor.fetchall()
     cursor.close()
@@ -521,22 +521,28 @@ def updateSale(id):
     sale = get_sale(id)
 
     # Get all rows for Dropdown 
-    query = "SELECT * FROM Employees;"
+    query = "SELECT * FROM Employees ORDER BY last_name;"
     cursor = db.execute_query(db_connection=db_connection, query=query)
     Employees = cursor.fetchall()
     cursor.close()
 
     # Get all rows for Dropdown 
-    query = "SELECT * FROM Customers;"
+    query = "SELECT * FROM Customers ORDER BY customer_last_name;"
     cursor = db.execute_query(db_connection=db_connection, query=query)
     Customers = cursor.fetchall()
     cursor.close()
 
     # Get all rows for Dropdown 
-    query = "SELECT * FROM Vehicles;"
+    query = "SELECT * FROM Vehicles ORDER BY make;"
     cursor = db.execute_query(db_connection=db_connection, query=query)
     Vehicles = cursor.fetchall()
     cursor.close()
+
+    # Get all the Employees_Customers_Map
+    query = "SELECT * FROM Employees_Customers_Map;"
+    cursor = db.execute_query(db_connection=db_connection, query=query)
+    Employees_Customers_Map = cursor.fetchall()
+    cursor.close()    
 
     # Get inputs from the POST request and store as variables
     if request.method == 'POST':
@@ -598,7 +604,7 @@ def updateSale(id):
 
         return redirect('/sales')
 
-    return render_template("updateSale.j2", Employees=Employees, Customers=Customers, Vehicles=Vehicles, sale=sale)
+    return render_template("updateSale.j2", Employees=Employees, Customers=Customers, Vehicles=Vehicles, sale=sale, Employees_Customers_Map=Employees_Customers_Map)
 
 
 # Employees_Customers_Map (Assign Salesperson)
@@ -607,13 +613,13 @@ def Employees_Customers_Map():
     """ Display Vehicles page and handle adding rows to Employees_Customers_Map table """
 
     # Get all rows for Dropdown 
-    query = "SELECT * FROM Employees;"
+    query = "SELECT * FROM Employees ORDER BY last_name;"
     cursor = db.execute_query(db_connection=db_connection, query=query)
     Employees = cursor.fetchall()
     cursor.close()
 
     # Get all rows for Dropdown 
-    query = "SELECT * FROM Customers;"
+    query = "SELECT * FROM Customers ORDER BY customer_last_name;"
     cursor = db.execute_query(db_connection=db_connection, query=query)
     Customers = cursor.fetchall()
     cursor.close()
@@ -664,7 +670,7 @@ def deleteEmployeeCustomer(id):
 
 # Listener 
 if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 8534))
+    port = int(os.environ.get('PORT', 8530))
     app.run(port=port, debug=True) 
 
 

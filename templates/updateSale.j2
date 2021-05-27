@@ -14,6 +14,13 @@
       <div class="six columns">
         <label for="employeeInput">Employee</label>
         <select id="employee" name="employee" value="{{ request.form['employee'] or sale['employee']}}" required>
+
+        {% for employee_customer in Employees_Customers_Map if sale['employee_customer_id'] == employee_customer['employee_customer_id'] %}
+          {% for employee in Employees if employee_customer['employee_id'] == employee['employee_id'] %}
+          <option selected value="{{ employee['employee_id'] }}">{{ employee['first_name'] }} {{ employee['last_name'] }}</option>
+          {% endfor %}
+        {% endfor %}
+
         {% for employee in Employees %}
           <option value="{{ employee['employee_id'] }}">{{ employee['first_name'] }} {{ employee['last_name'] }}</option>
         {% endfor %}
@@ -28,6 +35,12 @@
       <div class="six columns">
         <label for="customerInput">Customer</label>
         <select id="customer" name="customer" value="{{ request.form['customer'] or sale['customer'] }}" required>
+
+        {% for employee_customer in Employees_Customers_Map if sale['employee_customer_id'] == employee_customer['employee_customer_id'] %}
+          {% for customer in Customers if employee_customer['customer_id'] == customer['customer_id'] %}
+          <option selected value="{{ customer['customer_id'] }}">{{ customer['customer_first_name'] }} {{ customer['customer_last_name'] }}</option>
+          {% endfor %}
+        {% endfor %}
 
         {% for customer in Customers %}
           <option value="{{ customer['customer_id'] }}">{{ customer['customer_first_name'] }} {{ customer['customer_last_name'] }}</option>
@@ -44,6 +57,11 @@
       <div class="six columns">
         <label for="vehicleInput">Vehicle</label>
         <select id="vehicle" name="vehicle" value="{{ request.form['vehicle'] or sale['vehicle'] }}" required>
+
+        {% for vehicle in Vehicles if sale['vin'] == vehicle['vin'] %}
+          <option selected value="{{ vehicle['vin'] }}">{{ vehicle['make'] }} {{ vehicle['model'] }}</option>
+        {% endfor %}
+
         {% for vehicle in Vehicles %}
           <option value="{{ vehicle['vin'] }}">{{ vehicle['make'] }} {{ vehicle['model'] }}</option>
         {% endfor %}
