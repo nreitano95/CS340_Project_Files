@@ -419,7 +419,7 @@ def createSale():
     cursor.close()
 
     # Get all rows for Dropdown 
-    query = "SELECT * FROM Vehicles ORDER BY make;"
+    query = "SELECT * FROM Vehicles WHERE is_for_sale = True ORDER BY make;"
     cursor = db.execute_query(db_connection=db_connection, query=query)
     Vehicles = cursor.fetchall()
     cursor.close()
@@ -533,7 +533,7 @@ def updateSale(id):
     cursor.close()
 
     # Get all rows for Dropdown 
-    query = "SELECT * FROM Vehicles ORDER BY make;"
+    query = "SELECT * FROM Vehicles WHERE is_for_sale = True ORDER BY make;"
     cursor = db.execute_query(db_connection=db_connection, query=query)
     Vehicles = cursor.fetchall()
     cursor.close()
