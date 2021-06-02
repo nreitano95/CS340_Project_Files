@@ -1,3 +1,6 @@
+# Adapted from gkochera/CS340-demo-flask-app
+# https://github.com/osu-cs340-ecampus/flask-starter-app/tree/a43e09ebec3e8ccea38b3c819edc69d0b5f97457
+
 import MySQLdb
 import os
 from dotenv import load_dotenv, find_dotenv
