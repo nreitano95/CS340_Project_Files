@@ -47,6 +47,10 @@
   <input class="button-primary" type="submit" value="Submit">
   <a class="button" href="{{ url_for('root') }}">Cancel</a></form>  
 
+  {% if error %}
+    <p class="alert alert-error">{{ error }}</p>
+  {% endif %}
+
 </form>
 
   <h3>Employees_Customers_Map</h3>

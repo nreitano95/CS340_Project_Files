@@ -635,12 +635,18 @@ def Employees_Customers_Map():
         employee_id = request.form['employee_id']
         customer_id = request.form['customer_id']
 
-        # Set query to insert a row based on the form inputs            
-        query = "INSERT INTO Employees_Customers_Map (employee_id, customer_id) VALUES (%s, %s)"
-        cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(employee_id, customer_id))
-        results = cursor.fetchall()
+        # If there is no entry for the given employee/customer, insert new row
+        try: 
+            # Set query to insert a row based on the form inputs            
+            query = "INSERT INTO Employees_Customers_Map (employee_id, customer_id) VALUES (%s, %s)"
+            cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(employee_id, customer_id))
+            results = cursor.fetchall()
+            return redirect('/assign-salesperson')
         
-        return redirect('/assign-salesperson')
+        # Otherwise, throw an error message to prevent duplicate entry
+        except: 
+            error = "Entry already exists. Please try again."
+            return render_template("Employees_Customers_Map.j2", Employees=Employees, Customers=Customers, Employees_Customers_Map=results, error=error)
 
     return render_template("Employees_Customers_Map.j2", Employees=Employees, Customers=Customers, Employees_Customers_Map=results)
 
