@@ -89,7 +89,7 @@
     <div class="row">
       <div class="six columns">
         <label for="hasCustomerPaidInput">Has Customer Paid?</label>
-        <input class="u-half-width" type="checkbox" id="has_customer_paid" name="has_customer_paid">
+        <input class="u-half-width" type="checkbox" id="has_customer_paid" name="has_customer_paid" {% if sale['has_customer_paid'] %} checked=1 {% endif %}>
       </div>
     </div>
 

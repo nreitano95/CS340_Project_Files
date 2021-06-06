@@ -51,10 +51,10 @@
   <div class="row">
     <div class="six columns">
       <label for="isPreOwnedInput">Is Pre-Owned?</label>
-      <input class="u-half-width" type="checkbox" id="is_preowned" name="is_preowned">
+      <input class="u-half-width" type="checkbox" id="is_preowned" name="is_preowned" {% if vehicle['is_preowned'] %} checked=1 {% endif %}>
 
       <label for="isForSaleInput">Is For Sale?</label>
-      <input class="u-half-width" type="checkbox" id="is_for_sale" name="is_for_sale">
+      <input class="u-half-width" type="checkbox" id="is_for_sale" name="is_for_sale" {% if vehicle['is_for_sale'] %} checked=1 {% endif %}>
     </div>
   </div>
 
