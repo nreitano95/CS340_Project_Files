@@ -604,7 +604,7 @@ def updateSale(id):
 
         return redirect('/sales')
 
-    return render_template("updateSale.j2", Employees=Employees, Customers=Customers, Vehicles=Vehicles, sale=sale, Employees_Customers_Map=Employees_Customers_Map)
+    return render_template("updateSale.j2", sale=sale, Employees=Employees, Customers=Customers, Vehicles=Vehicles, Employees_Customers_Map=Employees_Customers_Map)
 
 
 # Employees_Customers_Map (Assign Salesperson)

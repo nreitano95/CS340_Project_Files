@@ -33,7 +33,7 @@
     </div>
     <div class="six columns">
       <label for="dateOfTerminationInput">Date of Termination</label>
-      <input class="u-full-width" type="date" id="date_of_termination" name="date_of_termination"value="{{ request.form['date_of_termination'] or employee['date_of_termination'] }}">
+      <input class="u-full-width" type="date" id="date_of_termination" name="date_of_termination" value="{{ request.form['date_of_termination'] or employee['date_of_termination'] }}">
     </div>
   </div>
   
@@ -56,6 +56,5 @@
 <form action="{{ url_for('deleteEmployee', id=employee['employee_id']) }}" method="POST">
   <input class="button" type="submit" value="Delete Employee">
 </form>
-
 
   {% endblock %}

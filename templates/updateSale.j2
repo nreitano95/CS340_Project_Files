@@ -10,7 +10,6 @@
   
 <form method='POST'>
   <div class="row">
-      {# Employee_Customer_ID  #}
       <div class="six columns">
         <label for="employeeInput">Employee</label>
         <select id="employee" name="employee" value="{{ request.form['employee'] or sale['employee']}}" required>
@@ -30,7 +29,6 @@
       <a href="{{ url_for('createEmployee') }}">Add New Employee</a>
     </div>
   <br>
-      {# Customer can be a dynamically populating dropdown #}    
     <div class="row">
       <div class="six columns">
         <label for="customerInput">Customer</label>
@@ -52,7 +50,6 @@
       <a href="{{ url_for('Employees_Customers_Map') }}">Assign Salesperson</a>
     </div><br>
 
-      {# Vehicle can be a dynamically populating dropdown #}    
     <div class="row">
       <div class="six columns">
         <label for="vehicleInput">Vehicle</label>
@@ -79,6 +76,7 @@
         <input class="u-half-width" type="text" id="sale_price" name="sale_price" value="{{ request.form['sale_price'] or sale['sale_price'] }}" required>
       </div>
     </div>
+    
     <div class="row">
       <div class="six columns">
         <label for="saleDateInput">Sale Date</label>
